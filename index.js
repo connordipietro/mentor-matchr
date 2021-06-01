@@ -1,12 +1,21 @@
 const express = require('express');
 const mongoose = require('mongoose')
-const path = require('path');
-const keys = require("./config/keys");
-const bodyParser = require("body-parser");
+
 const http = require("http");
 
-const routes = require("./routes/index");
+// Imports routers
+const routes = require("./routes/index"); 
 
+// Imports middleware
+const { urlencoded } = require('express');
+const session = require("express-session")
+
+// Imports deployment necesities
+const path = require('path');
+const keys = require("./config/keys");
+
+
+// Establishes mongoose 
 mongoose.connect(keys.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -18,14 +27,22 @@ mongoose.connect(keys.MONGODB_URI, {
 
 const app = express();
 
-app.use(bodyParser.json());
+// Registers body parsing middleware
+app.use(express.json());
+app.use(urlencoded( { extended: false}));
 
+// Registers session middleware
 app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
+  session({
+    cookie: {
+      maxAge: 3600000 * 24, // one day
+  },
+  saveUninitialized: false,
+  resave: false,
+  secret: 'asdlkjewoiuoiuwe'
+}))
 
+// Registers coors headers
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
@@ -36,14 +53,25 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(routes);
+// Imports router
+app.use("/api", routes);
+
+app.get("/", (req, res) => {
+  if (req.session.authenticated) {
+    // User is authenticated
+    res.send({ status: 200, session: req.session, id: req.sessionID})
+  } else {
+    // User has not been authenticated
+    res.send({ status: 200, session: req.session, id: req.sessionID})
+    }
+  }
+);
 
 if (process.env.NODE_ENV === "production") {
-  // Express will serve up production assets
+  // Serve production assets
   app.use(express.static("client/build"));
 
-  // Express will serve up the index.html file
-  // if it doesn't recognize the route
+  // Serve index.html from /build
   app.get("*", (req, res) => {
     res.sendFile(path.resolve("client", "build", "index.html"));
   });
@@ -51,7 +79,7 @@ if (process.env.NODE_ENV === "production") {
 
 const server = http.createServer(app);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 server.listen(PORT, () => {
   console.log("Node.js listening on port " + PORT);

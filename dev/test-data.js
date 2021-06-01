@@ -1,4 +1,4 @@
-const testDbItemData = [
+/* const testDbItemData = [
   {
     name: "Test one",
     test: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -13,4 +13,4 @@ const testDbItemData = [
   },
 ];
 
-module.exports = testDbItemData;
+module.exports = testDbItemData; */

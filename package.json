@@ -6,13 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
+    "dev": "nodemon ./",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "connect-mongo": "^4.4.1",
     "express": "^4.17.1",
+    "express-session": "^1.17.2",
     "mongodb": "^3.6.9",
     "mongoose": "^5.12.12"
   }
