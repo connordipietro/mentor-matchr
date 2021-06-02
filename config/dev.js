@@ -1,3 +1,3 @@
 module.exports = {
-  MONGODB_URI: "mongodb://localhost/tiered-content",
+  MONGODB_URI: 'mongodb://localhost/tiered-content',
 };

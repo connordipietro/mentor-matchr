@@ -1,47 +1,46 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-const http = require("http");
-
-// Imports routers
-const routes = require("./routes/index"); 
+const http = require('http');
 
 // Imports middleware
 const { urlencoded } = require('express');
-const session = require("express-session");
-const passport = require("passport");
+const session = require('express-session');
+const passport = require('passport');
 
 // Imports deployment necesities
 const path = require('path');
-const keys = require("./config/keys");
+const keys = require('./config/keys');
 
+// Imports routers
+const routes = require('./routes/index');
 
-// Establishes mongoose 
-mongoose.connect(keys.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  }
-)
-.then(() => console.log('connected to db'))
-.catch((err) => console.log(`error connecting to db ${err}`));
-
+// Establishes mongoose
+mongoose
+  .connect(keys.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log('connected to db'))
+  .catch((err) => console.log(`error connecting to db ${err}`));
 
 const app = express();
 
 // Registers body parsing middleware
 app.use(express.json());
-app.use(urlencoded( { extended: false}));
+app.use(urlencoded({ extended: false }));
 
 // Registers session middleware
 app.use(
   session({
     cookie: {
       maxAge: 3600000 * 24, // one day
-  },
-  saveUninitialized: false,
-  resave: false,
-  secret: 'asdlkjewoiuoiuwe'
-}))
+    },
+    saveUninitialized: false,
+    resave: false,
+    secret: 'asdlkjewoiuoiuwe',
+  })
+);
 
 // Registers passport auth middleware
 app.use(passport.initialize());
@@ -49,39 +48,37 @@ app.use(passport.sessions());
 
 // Registers coors headers
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
   res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
   );
   next();
 });
 
 // Imports router
-app.use("/api", routes);
+app.use('/api', routes);
 
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   if (req.session.authenticated) {
     // User is authenticated
-    res.send({ status: 200, session: req.session, id: req.sessionID})
+    res.send({ status: 200, session: req.session, id: req.sessionID });
   } else {
     // User has not been authenticated
-    res.send({ status: 200, session: req.session, id: req.sessionID})
-    }
+    res.send({ status: 200, session: req.session, id: req.sessionID });
   }
-);
+});
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === 'production') {
   // Serve production assets
-  app.use(express.static("client/build"));
+  app.use(express.static('client/build'));
 
   // Serve index.html from /build for base route (catch all)
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve("client", "build", "index.html"));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve('client', 'build', 'index.html'));
   });
 }
-
 
 // Server set up
 const server = http.createServer(app);
@@ -90,5 +87,5 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 5001;
 
 server.listen(PORT, () => {
-  console.log("Listening on port " + PORT);
+  console.log(`Listening on port ${PORT}`);
 });
