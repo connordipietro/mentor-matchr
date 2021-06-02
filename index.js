@@ -1,5 +1,5 @@
 const express = require('express');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const http = require("http");
 
@@ -8,7 +8,8 @@ const routes = require("./routes/index");
 
 // Imports middleware
 const { urlencoded } = require('express');
-const session = require("express-session")
+const session = require("express-session");
+const passport = require("passport");
 
 // Imports deployment necesities
 const path = require('path');
@@ -42,6 +43,10 @@ app.use(
   secret: 'asdlkjewoiuoiuwe'
 }))
 
+// Registers passport auth middleware
+app.use(passport.initialize());
+app.use(passport.sessions());
+
 // Registers coors headers
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -71,16 +76,19 @@ if (process.env.NODE_ENV === "production") {
   // Serve production assets
   app.use(express.static("client/build"));
 
-  // Serve index.html from /build
+  // Serve index.html from /build for base route (catch all)
   app.get("*", (req, res) => {
     res.sendFile(path.resolve("client", "build", "index.html"));
   });
 }
 
+
+// Server set up
 const server = http.createServer(app);
 
+// Dynamic port selection for heroku/development
 const PORT = process.env.PORT || 5001;
 
 server.listen(PORT, () => {
-  console.log("Node.js listening on port " + PORT);
+  console.log("Listening on port " + PORT);
 });
