@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const passport = require('passport');
 
 // /api/auth/status
 router.get('/status', (req, res) => {
@@ -9,15 +10,10 @@ router.get('/status', (req, res) => {
 });
 
 // /api/auth/google
-router.get('/google', (req, res) => {
-  res.send({
-    status: 200,
-    message: 'Google auth route',
-  });
-});
+router.get('/google', passport.authenticate('google'));
 
 // api/auth/google/redirect
-router.get('/google/redirect', (_req, res) => {
+router.get('/google/redirect', passport.authenticate('google'), (_req, res) => {
   res.send({
     status: 200,
     message: 'Google redirect route',

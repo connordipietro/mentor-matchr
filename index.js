@@ -1,3 +1,9 @@
+// Imports environment variabls
+require('dotenv').config();
+
+// Import passport strategy
+require('./strategies/google');
+
 const express = require('express');
 const mongoose = require('mongoose');
 
@@ -44,7 +50,7 @@ app.use(
 
 // Registers passport auth middleware
 app.use(passport.initialize());
-app.use(passport.sessions());
+app.use(passport.session());
 
 // Registers coors headers
 app.use((req, res, next) => {
@@ -83,8 +89,7 @@ if (process.env.NODE_ENV === 'production') {
 // Server set up
 const server = http.createServer(app);
 
-// Dynamic port selection for heroku/development
-const PORT = process.env.PORT || 5001;
+const { PORT } = process.env;
 
 server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
