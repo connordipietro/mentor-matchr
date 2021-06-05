@@ -16,14 +16,13 @@ const passport = require('passport');
 
 // Imports deployment necesities
 const path = require('path');
-const keys = require('./config/keys');
 
 // Imports routers
 const routes = require('./routes/index');
 
 // Establishes mongoose
 mongoose
-  .connect(keys.MONGODB_URI, {
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
