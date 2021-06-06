@@ -1,7 +1,9 @@
+import { PropTypes } from 'prop-types';
 import { useEffect } from 'react';
 import { getLoginStatus } from '../utilities/api';
 
-export const PaymentPage = () => {
+export const PaymentPage = ({ history }) => {
+  console.log(history);
   useEffect(() => {
     getLoginStatus()
       .then(({ data }) => {
@@ -11,4 +13,8 @@ export const PaymentPage = () => {
   });
 
   return <div>Payment Page</div>;
+};
+
+PaymentPage.propTypes = {
+  history: PropTypes.object,
 };
