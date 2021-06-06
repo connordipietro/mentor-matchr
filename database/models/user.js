@@ -22,7 +22,7 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  googleId: {
+  id: {
     type: String,
     required: true,
   },

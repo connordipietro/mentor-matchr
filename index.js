@@ -1,12 +1,12 @@
 // Imports environment variabls
 require('dotenv').config();
 
-// Import passport strategy
+// Imports passport strategy
 require('./strategies/google');
 
+// Imports express, mmongooose, and http
 const express = require('express');
 const mongoose = require('mongoose');
-
 const http = require('http');
 
 // Imports middleware
@@ -65,16 +65,6 @@ app.use((req, res, next) => {
 // Imports router
 app.use('/api', routes);
 
-app.get('/', (req, res) => {
-  if (req.session.authenticated) {
-    // User is authenticated
-    res.send({ status: 200, session: req.session, id: req.sessionID });
-  } else {
-    // User has not been authenticated
-    res.send({ status: 200, session: req.session, id: req.sessionID });
-  }
-});
-
 if (process.env.NODE_ENV === 'production') {
   // Serve production assets
   app.use(express.static('client/build'));
@@ -83,7 +73,17 @@ if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
     res.sendFile(path.resolve('client', 'build', 'index.html'));
   });
-}
+};
+
+app.get('/isAuthenticated', (req, res) => {
+  if (req.session.authenticated) {
+    // User is authenticated
+    res.send({ status: 200, session: req.session, id: req.sessionID });
+  } else {
+    // User has not been authenticated
+    res.send({ status: 200, session: req.session, id: req.sessionID });
+  }
+});
 
 // Server set up
 const server = http.createServer(app);
