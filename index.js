@@ -7,7 +7,7 @@ require('./strategies/google');
 const session = require('express-session');
 
 // Imports express, mmongooose, and http
-const MongoStore = require('connect-mongo')
+const MongoStore = require('connect-mongo');
 const express = require('express');
 const mongoose = require('mongoose');
 const http = require('http');
@@ -15,6 +15,7 @@ const http = require('http');
 // Imports middleware
 const { urlencoded } = require('express');
 const passport = require('passport');
+const cors = require('cors');
 
 // Imports deployment necesities
 const path = require('path');
@@ -56,16 +57,13 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Registers coors headers
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
-  next();
-});
+// Registers cors headers
+app.use(
+  cors({
+    origin: ['http://localhost:3000'],
+    credentials: true,
+  })
+);
 
 // Imports router
 app.use('/api', routes);
@@ -78,7 +76,7 @@ if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
     res.sendFile(path.resolve('client', 'build', 'index.html'));
   });
-};
+}
 
 /* app.get('/', (req, res) => {
   if (req.session.authenticated) {
