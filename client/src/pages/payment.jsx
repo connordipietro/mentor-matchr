@@ -1,1 +1,1 @@
-export const PaymentPage = () => <div>Payment Page</div>
+export const PaymentPage = () => <div>Payment Page</div>;

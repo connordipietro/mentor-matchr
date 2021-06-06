@@ -18,10 +18,7 @@ router.get('/google', passport.authenticate('google'), () => {
 
 // /api/auth/google/redirect
 router.get('/google/redirect', passport.authenticate('google'), (_req, res) => {
-  res.send({
-    status: 200,
-    message: 'Google redirect route',
-  });
+  res.redirect(process.env.GOOGLE_REDIRECT);
 });
 
 module.exports = router;

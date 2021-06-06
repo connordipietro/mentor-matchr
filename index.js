@@ -80,7 +80,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 };
 
-app.get('/', (req, res) => {
+/* app.get('/', (req, res) => {
   if (req.session.authenticated) {
     // User is authenticated
     res.send({ status: 200, session: req.session, id: req.sessionID });
@@ -88,7 +88,7 @@ app.get('/', (req, res) => {
     // User has not been authenticated
     res.send({ status: 200, session: req.session, id: req.sessionID });
   }
-});
+}); */
 
 // Server set up
 const server = http.createServer(app);
