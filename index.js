@@ -4,14 +4,16 @@ require('dotenv').config();
 // Imports passport strategy
 require('./strategies/google');
 
+const session = require('express-session');
+
 // Imports express, mmongooose, and http
+const MongoStore = require('connect-mongo')
 const express = require('express');
 const mongoose = require('mongoose');
 const http = require('http');
 
 // Imports middleware
 const { urlencoded } = require('express');
-const session = require('express-session');
 const passport = require('passport');
 
 // Imports deployment necesities
@@ -44,6 +46,9 @@ app.use(
     saveUninitialized: false,
     resave: false,
     secret: 'asdlkjewoiuoiuwe',
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+    }),
   })
 );
 
@@ -75,7 +80,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 };
 
-app.get('/isAuthenticated', (req, res) => {
+app.get('/', (req, res) => {
   if (req.session.authenticated) {
     // User is authenticated
     res.send({ status: 200, session: req.session, id: req.sessionID });
