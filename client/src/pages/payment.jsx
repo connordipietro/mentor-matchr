@@ -1,9 +1,13 @@
-import { PropTypes } from 'prop-types';
 import { useEffect, useState } from 'react';
+import { CardElement } from '@stripe/react-stripe-js';
+import { useHistory } from 'react-router-dom';
 import { getLoginStatus } from '../utilities/api';
 
-export const PaymentPage = ({ history }) => {
+export const PaymentPage = () => {
   const [loading, setLoading] = useState(true);
+  const history = useHistory();
+
+  console.log(history);
 
   useEffect(() => {
     getLoginStatus()
@@ -18,9 +22,12 @@ export const PaymentPage = ({ history }) => {
       });
   });
 
-  return !loading ? <div>Payment Page</div> : <h3>Loading...</h3>;
-};
-
-PaymentPage.propTypes = {
-  history: PropTypes.object,
+  return !loading ? (
+    <div>
+      <h3>Payment Page</h3>
+      <CardElement />
+    </div>
+  ) : (
+    <h3>Loading...</h3>
+  );
 };
