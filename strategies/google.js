@@ -1,5 +1,6 @@
 const passport = require('passport');
 const { Strategy } = require('passport-google-oauth20');
+const { createCustomer } = require('../utilities/stripe.js');
 const User = require('../database/models/user');
 
 passport.serializeUser((user, done) => {
@@ -30,7 +31,14 @@ passport.use(
         const userInDB = await User.findOne({ id: sub });
         if (!userInDB) {
           console.log('User not found');
-          const newUser = await User.create({ email, id: sub });
+          const stripeCustomer = await createCustomer({ email });
+          const newUser = await User.create({
+            email,
+            id: sub,
+            customer: {
+              stripeId: stripeCustomer.id,
+            },
+          });
           return done(null, newUser);
         }
         console.log('Found user');
