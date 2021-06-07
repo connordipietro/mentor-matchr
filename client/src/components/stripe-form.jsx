@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
 export const StripeForm = () => {
+  const [error, setError] = useState();
+
   const stripe = useStripe();
   const elements = useElements();
 
@@ -19,10 +22,22 @@ export const StripeForm = () => {
     });
   };
 
+  const handleChange = (event) => {
+    if (event.error) {
+      setError(event.error.message);
+    } else {
+      setError(null);
+    }
+    console.log(event);
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <CardElement />
-      <button type="submit"> Pay </button>
-    </form>
+    <div>
+      {error ? <div>{error}</div> : null}
+      <form onSubmit={handleSubmit}>
+        <CardElement onChange={handleChange} />
+        <button type="submit"> Pay </button>
+      </form>
+    </div>
   );
 };
