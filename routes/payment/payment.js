@@ -12,6 +12,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/methods/create', async (req, res) => {
+  console.log(req.user);
   if (req.user) {
     const { id } = req.body;
     if (!id) return res.sendStatus(400);
