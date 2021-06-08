@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-import { LoginPage, PaymentPage } from './pages';
+import { LoginPage, PaymentPage, ProductsPage } from './pages';
 
 const stripePromise = loadStripe(
   'pk_test_51IxgMNF6tBtQLmcj8F8QFcsxYnXfhn8g1Q4xwS0DMW5WVpu7mwj7YsY9MpKaKQX9Bw9FrWmilb23M0huqfpwI92p00jUV5Ti5c'
@@ -18,6 +18,7 @@ function App() {
               <PaymentPage />
             </Elements>
           </Route>
+          <Route exact path="/products" component={ProductsPage} />
         </Switch>
       </Router>
     </>

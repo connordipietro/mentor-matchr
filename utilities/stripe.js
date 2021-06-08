@@ -13,16 +13,11 @@ const createCustomer = async ({ email }) => {
 const associatePaymentMethod = async ({ customer, id }) =>
   stripe.paymentMethods.attach(id, { customer });
 
-const createSubscription = async () => {
-  /*   const response = await stripe.createSubscription({
-    items: [
-      {
-        price: 'price_1IztDDF6tBtQLmcjuqmPUo00',
-      },
-    ],
-    customer: 'cus_Jd87congCcDyVH',
+const createSubscription = async ({ customer, payment, price }) =>
+  stripe.subscriptions.create({
+    customer,
+    default_payment_method: payment,
+    items: [{ price }],
   });
-  console.log(response); */
-};
 
 module.exports = { createCustomer, associatePaymentMethod, createSubscription };
