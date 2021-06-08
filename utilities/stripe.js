@@ -10,4 +10,7 @@ const createCustomer = async ({ email }) => {
   return data.length === 0 ? stripe.customers.create({ email }) : data[0];
 };
 
-module.exports = { createCustomer };
+const associatePaymentMethod = async ({ customer, id }) =>
+  stripe.paymentMethods.attach(id, { customer });
+
+module.exports = { createCustomer, associatePaymentMethod };

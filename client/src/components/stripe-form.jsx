@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { setPaymentMethod } from '../utilities/api';
 
 export const StripeForm = () => {
   const [error, setError] = useState();
@@ -27,6 +28,7 @@ export const StripeForm = () => {
           setError(null);
           // Send paymentMethod.id to server
           console.log(result);
+          setPaymentMethod({ id: result.paymentMethod.id });
         }
       })
       .then(function (result) {
