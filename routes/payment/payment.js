@@ -1,5 +1,6 @@
 const router = require('express').Router();
 
+const user = require('../../database/models/user');
 const { associatePaymentMethod } = require('../../utilities/stripe');
 
 // /api/payment/
@@ -20,7 +21,18 @@ router.post('/methods/create', async (req, res) => {
       id,
     });
     console.log(result);
-    return res.sendStatus(200);
+
+    const update = await user.findOneAndUpdate(
+      { email: req.user.email },
+      {
+        $set: { 'customer.defaultPaymentId': result.id },
+      },
+      {
+        new: true,
+      }
+    );
+
+    return res.send(update);
   }
   return res.sendStatus(401);
 });

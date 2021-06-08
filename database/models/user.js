@@ -15,6 +15,10 @@ const CustomerSchema = new Schema({
     type: Date,
     required: false,
   },
+  defaultPaymentId: {
+    type: String,
+    required: false,
+  },
 });
 
 const UserSchema = new Schema({
