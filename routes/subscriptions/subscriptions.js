@@ -13,8 +13,9 @@ router.post('/new', async (req, res) => {
       payment: req.user.customer.defaultPaymentId,
       price: priceId,
     });
-    res.send(response);
-  } else res.send({ status: 401 });
+    return res.send(response);
+  }
+  return res.sendStatus(401);
 });
 
 module.exports = router;

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { setPaymentMethod } from '../utilities/api';
+import './stripe-form.css';
 
 export const StripeForm = () => {
   const [error, setError] = useState();
@@ -11,8 +12,13 @@ export const StripeForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // Return if card field empty
+    if (event.target[0].value === '') {
+      setError('Please enter in your payment information to continue');
+      return;
+    }
+    // Return if stripe or elements not loaded
     if (!stripe || !elements) {
-      // Checks if stripe and elements have loaded before returning form
       return;
     }
 
