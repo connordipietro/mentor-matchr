@@ -19,3 +19,6 @@ export const getAdminStatus = () =>
 
 export const checkIfBanner = () =>
   axios.get(config.url.API_CHECK_IF_BANNER, credentials);
+
+export const postBanner = (data) =>
+  axios.post(config.url.API_POST_BANNER, data, credentials);

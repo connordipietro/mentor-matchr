@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { CreateBanner } from '../components';
 /* import { useHistory } from 'react-router-dom'; */
 import { getAdminStatus } from '../utilities/api';
 
@@ -24,7 +25,14 @@ export const AdminPage = () => {
   return !loading ? (
     <div>
       <h3>Admin Dashboard</h3>
-      {!adminStatus ? <h3>Access Denied</h3> : <h3>Access granted</h3>}
+      {!adminStatus ? (
+        <h3>Access Denied</h3>
+      ) : (
+        <div>
+          <h3>Access granted</h3>
+          <CreateBanner />
+        </div>
+      )}
     </div>
   ) : (
     <h3>Loading...</h3>
