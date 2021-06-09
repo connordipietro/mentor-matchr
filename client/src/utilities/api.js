@@ -13,3 +13,6 @@ export const setPaymentMethod = (data) =>
 
 export const newSubscription = (data) =>
   axios.post(config.url.API_NEW_SUBCRIPTION_POST, data, credentials);
+
+export const getAdminStatus = () =>
+  axios.get(config.url.API_ADMIN_STATUS, credentials);
