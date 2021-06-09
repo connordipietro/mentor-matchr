@@ -16,3 +16,6 @@ export const newSubscription = (data) =>
 
 export const getAdminStatus = () =>
   axios.get(config.url.API_ADMIN_STATUS, credentials);
+
+export const checkIfBanner = () =>
+  axios.get(config.url.API_CHECK_IF_BANNER, credentials);

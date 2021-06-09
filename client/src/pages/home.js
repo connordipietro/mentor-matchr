@@ -1,1 +1,8 @@
-export const HomePage = () => <h1>Home Page</h1>;
+import { Banner } from '../components';
+
+export const HomePage = () => (
+  <>
+    <Banner />
+    <h1>Home Page</h1>
+  </>
+);
