@@ -1,8 +1,7 @@
-import { Banner } from '../components';
+import Jumbotron from '../components/home/jumbotron';
 
 export const HomePage = () => (
   <>
-    <Banner />
-    <h1>Home Page</h1>
+    <Jumbotron />
   </>
 );

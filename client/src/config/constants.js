@@ -7,6 +7,13 @@ const prod = {
     API_ADMIN_STATUS: `https://tiered-content.herokuapp.com/api/admin/dashboard`,
     API_CHECK_IF_BANNER: `https://tiered-content.herokuapp.com/api/admin/banner`,
     API_POST_BANNER: `https://tiered-content.herokuapp.com/api/admin/banner`,
+    HOME: '',
+    AVAILIBILITY: '',
+    UPCOMING: '',
+    SETTINGS: '',
+    ABOUT: '',
+    CONTACT: '',
+    DONATE: '',
   },
 };
 
@@ -19,6 +26,13 @@ const dev = {
     API_ADMIN_STATUS: `http://localhost:5000/api/admin/dashboard`,
     API_CHECK_IF_BANNER: `http://localhost:5000/api/admin/banner`,
     API_POST_BANNER: `http://localhost:5000/api/admin/banner`,
+    HOME: 'http://localhost:3000/home',
+    AVAILIBILITY: '',
+    UPCOMING: '',
+    SETTINGS: '',
+    ABOUT: '',
+    CONTACT: '',
+    DONATE: '',
   },
 };
 

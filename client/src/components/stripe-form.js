@@ -13,10 +13,10 @@ export const StripeForm = () => {
     event.preventDefault();
 
     // Return if card field empty
-    if (event.target[0].value === '') {
+    /*  if (event.target[0].value === '') {
       setError('Please enter in your payment information to continue');
       return;
-    }
+    } */
     // Return if stripe or elements not loaded
     if (!stripe || !elements) {
       return;

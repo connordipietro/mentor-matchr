@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { checkIfBanner } from '../../utilities/api';
 import '../components-style.css';
 
-export const Banner = () => {
+export default function Banner() {
   const [bannerStatus, setBannerStatus] = useState();
   const [bannerMsg, setBannerMsg] = useState('');
 
@@ -21,4 +21,4 @@ export const Banner = () => {
       <div className="banner-inner">{bannerMsg}</div>
     </div>
   );
-};
+}

@@ -4,7 +4,7 @@ const Banner = require('../../database/models/banner');
 // /api/admin/dashboard
 router.get('/dashboard', (req, res) => {
   // For testing the admin dashboard, change this line to your gmail
-  if (req.user.email === 'connor.dipietro@gmail.com') {
+  if (req.user.email === process.env.ADMIN_USER) {
     res.sendStatus(200);
   } else {
     res.sendStatus(401);
