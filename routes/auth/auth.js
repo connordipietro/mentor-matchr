@@ -13,7 +13,7 @@ router.get('/google', passport.authenticate('google'), () => {
 
 // /api/auth/google/redirect
 router.get('/google/redirect', passport.authenticate('google'), (_req, res) => {
-  res.redirect(process.env.GOOGLE_REDIRECT);
+  res.redirect('process.env.CREATE_ACCOUNT');
 });
 
 router.get('/google/logout', (req, res) => {

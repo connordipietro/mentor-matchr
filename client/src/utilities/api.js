@@ -34,7 +34,10 @@ export const GET_AUTH_STATUS = 'GET_AUTH_STATUS';
 
 export function getAuthStatus() {
   return axios
-    .get(config.url.API_AUTH_STATUS, credentials)
+    .get(config.url.API_AUTH_STATUS, {
+      headers: { Pragma: 'no-cache' },
+      withCredentials: true,
+    })
     .then((response) => ({
       type: GET_AUTH_STATUS,
       payload: response,
