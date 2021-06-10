@@ -43,7 +43,7 @@ export default function Jumbotron() {
       </StyledContainer>
       <StyledContainer maxWidth={false}>
         <StyledButton>
-          <Typography variant="h4">Learn more! </Typography>
+          <Typography variant="h4">Get started! </Typography>
         </StyledButton>
       </StyledContainer>
     </>

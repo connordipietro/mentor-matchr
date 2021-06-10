@@ -23,6 +23,7 @@ function App() {
         <Banner />
         <MenuBar />
         <Switch>
+          <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/payment">
             <Elements stripe={stripePromise}>

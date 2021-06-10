@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import GetTestDataReducer from './get-test-data-reducer';
+import GetAuthStatusReducer from './get-auth-status-reducer';
 
 const rootReducer = combineReducers({
-  testData: GetTestDataReducer,
+  authStatus: GetAuthStatusReducer,
 });
 
 export default rootReducer;

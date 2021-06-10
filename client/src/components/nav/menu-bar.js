@@ -1,17 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import TemporaryDrawer from './menu-items-to-drawer';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Switch,
+  FormGroup,
+  MenuItem,
+  Menu,
+  FormControlLabel,
+} from '@material-ui/core';
+import { AccountCircle } from '@material-ui/icons';
+import TemporaryDrawer from './side-drawer';
+import { getLoginStatus, logout } from '../../utilities/api';
+import { config } from '../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,13 +30,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MenuBar() {
+  const history = useHistory();
   const classes = useStyles();
+
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const open = Boolean(anchorEl);
 
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
+  const handleChange = (e) => {
+    setAuth(e.target.checked);
+    if (auth) {
+      // If user is authed when toggle is checked, log them out and return to home page, return
+      logout();
+      setLoading(false);
+      history.push('/home');
+      return;
+    }
+    // Else, redirect them to google login page
+    window.location.href = config.url.API_AUTH_GOOGLE;
   };
 
   const handleMenu = (event) => {
@@ -43,18 +60,32 @@ export default function MenuBar() {
     setAnchorEl(null);
   };
 
+  // Verify login status
+  useEffect(() => {
+    getLoginStatus()
+      .then(() => {
+        setLoading(false);
+        setAuth(true);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setAuth(false);
+      });
+  }, [loading]);
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
           <TemporaryDrawer
+            auth={auth}
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
           />
           <Typography variant="h6" className={classes.title} />
-          {auth && (
+          {!loading && auth && (
             <div>
               <IconButton
                 aria-label="account of current user"
@@ -85,18 +116,20 @@ export default function MenuBar() {
               </Menu>
             </div>
           )}
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={auth}
-                  onChange={handleChange}
-                  aria-label="login switch"
-                />
-              }
-              label={auth ? 'Logout' : 'Login // Signup'}
-            />
-          </FormGroup>
+          {!loading ? (
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={auth}
+                    onChange={handleChange}
+                    aria-label="login switch"
+                  />
+                }
+                label={auth ? 'Logout' : 'Login // Signup'}
+              />
+            </FormGroup>
+          ) : null}
         </Toolbar>
       </AppBar>
     </div>

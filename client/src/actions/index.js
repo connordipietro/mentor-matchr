@@ -1,19 +1,18 @@
 import axios from 'axios';
+import { config } from '../config/constants';
 
-export const GET_TEST_DATA = 'GET_TEST_DATA';
+export const GET_AUTH_STATUS = 'GET_AUTH_STATUS';
 
-export function getTestData() {
-  return axios
-    .get(`/test-data`)
-    .then((response) => ({
-      type: GET_TEST_DATA,
+const credentials = {
+  withCredentials: true,
+};
+
+export function getAuthStatus() {
+  return axios.get(config.url.API_AUTH_STATUS, credentials).then((response) => {
+    console.log(response);
+    return {
+      type: GET_AUTH_STATUS,
       payload: response,
-    }))
-    .catch(() => {
-      alert('Error');
-    });
-}
-
-export function generateTestData() {
-  axios.get(`/generate-test-data`);
+    };
+  });
 }

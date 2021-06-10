@@ -6,7 +6,10 @@ const credentials = {
 };
 
 export const getLoginStatus = () =>
-  axios.get(config.url.API_AUTH_STATUS, credentials);
+  axios.get(config.url.API_AUTH_STATUS, {
+    headers: { Pragma: 'no-cache' },
+    withCredentials: true,
+  });
 
 export const setPaymentMethod = (data) =>
   axios.post(config.url.API_PAYMENT_METHOD_CREATE, data, credentials);
@@ -22,3 +25,18 @@ export const checkIfBanner = () =>
 
 export const postBanner = (data) =>
   axios.post(config.url.API_POST_BANNER, data, credentials);
+
+export const logout = () => axios.get(config.url.API_LOGOUT, credentials);
+console.log(config.url.API_LOGOUT);
+
+// Auth status check for redux store
+export const GET_AUTH_STATUS = 'GET_AUTH_STATUS';
+
+export function getAuthStatus() {
+  return axios
+    .get(config.url.API_AUTH_STATUS, credentials)
+    .then((response) => ({
+      type: GET_AUTH_STATUS,
+      payload: response,
+    }));
+}

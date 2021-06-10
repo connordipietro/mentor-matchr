@@ -1,24 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import SettingsIcon from '@material-ui/icons/Settings';
-import InfoIcon from '@material-ui/icons/Info';
-import ScheduleIcon from '@material-ui/icons/Schedule';
+import {
+  makeStyles,
+  Drawer,
+  List,
+  Divider,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  IconButton,
+} from '@material-ui/core';
+
 import EventIcon from '@material-ui/icons/Event';
 import HomeIcon from '@material-ui/icons/Home';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import InfoIcon from '@material-ui/icons/Info';
+import MenuIcon from '@material-ui/icons/Menu';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import SettingsIcon from '@material-ui/icons/Settings';
+import ScheduleIcon from '@material-ui/icons/Schedule';
+
 import { useHistory } from 'react-router';
 
 const useStyles = makeStyles({
@@ -30,7 +33,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function TemporaryDrawer() {
+export default function TemporaryDrawer({ auth }) {
   const history = useHistory();
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -60,28 +63,31 @@ export default function TemporaryDrawer() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
-        {[
-          { text: 'Home', icon: <HomeIcon /> },
-          { text: 'Availibility', icon: <ScheduleIcon /> },
-          { text: 'Upcoming', icon: <EventIcon /> },
-          { text: 'Settings', icon: <SettingsIcon /> },
-        ].map((item) => (
-          <ListItem
-            button
-            key={item.text}
-            onClick={() => history.push(`/${item.text}`)}
-          >
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} />
-          </ListItem>
-        ))}
-      </List>
+      {auth ? (
+        <List>
+          {[
+            { text: 'Home', icon: <HomeIcon /> },
+            { text: 'Availibility', icon: <ScheduleIcon /> },
+            { text: 'Upcoming', icon: <EventIcon /> },
+            { text: 'Settings', icon: <SettingsIcon /> },
+          ].map((item) => (
+            <ListItem
+              button
+              key={item.text}
+              onClick={() => history.push(`/${item.text}`)}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItem>
+          ))}
+        </List>
+      ) : null}
+
       <Divider />
       <List>
         {[
           { text: 'About', icon: <InfoIcon /> },
-          { text: 'Contact', icon: <MailIcon /> },
+          { text: 'Contact', icon: <MailOutlineIcon /> },
           { text: 'Donate', icon: <MonetizationOnIcon /> },
         ].map((item) => (
           <ListItem button key={item.text}>
@@ -116,3 +122,7 @@ export default function TemporaryDrawer() {
     </div>
   );
 }
+
+TemporaryDrawer.propTypes = {
+  auth: PropTypes.bool,
+};
