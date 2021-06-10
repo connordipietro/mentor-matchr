@@ -1,7 +1,5 @@
-export const CreateAccountPage = () => (
-  <>
-    <h1>Welcome!</h1>
-  </>
-);
+import './pages.css';
+
+export const CreateAccountPage = () => <div className="console-container" />;
 
 export default CreateAccountPage;
