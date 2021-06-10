@@ -2,7 +2,7 @@ const router = require('express').Router();
 const passport = require('passport');
 
 // /api/auth/status
-router.get('/status', (req, res) =>
+router.get('/status', async (req, res) =>
   req.user ? res.send(req.user) : res.sendStatus(401)
 );
 
@@ -17,9 +17,10 @@ router.get('/google/redirect', passport.authenticate('google'), (_req, res) => {
 });
 
 router.get('/google/logout', (req, res) => {
-  req.session = null;
-  req.logout();
-  /*   res.redirect('/'); */
+  req.session.destroy(() => {
+    req.logout();
+    res.clearCookie('connect.sid');
+  });
 });
 
 module.exports = router;
