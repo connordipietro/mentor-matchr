@@ -5,14 +5,10 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  IconButton,
   Switch,
   FormGroup,
-  MenuItem,
-  Menu,
   FormControlLabel,
 } from '@material-ui/core';
-import { AccountCircle } from '@material-ui/icons';
 import TemporaryDrawer from './side-drawer';
 import { getLoginStatus, logout } from '../../utilities/api';
 import { config } from '../../config/constants';
@@ -20,11 +16,16 @@ import { config } from '../../config/constants';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    background: 'black',
   },
   menuButton: {
     marginRight: theme.spacing(2),
   },
   title: {
+    flexGrow: 1,
+  },
+  custom: {
+    backgroundColor: 'black',
     flexGrow: 1,
   },
 }));
@@ -34,10 +35,7 @@ export default function MenuBar() {
   const classes = useStyles();
 
   const [auth, setAuth] = useState(true);
-  const [anchorEl, setAnchorEl] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  const open = Boolean(anchorEl);
 
   const handleChange = (e) => {
     setAuth(e.target.checked);
@@ -50,14 +48,6 @@ export default function MenuBar() {
     }
     // Else, redirect them to google login page
     window.location.href = config.url.API_AUTH_GOOGLE;
-  };
-
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
   };
 
   // Verify login status
@@ -74,9 +64,9 @@ export default function MenuBar() {
   }, [loading]);
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
+    <div className={classes.custom}>
+      <AppBar position="static" background="black">
+        <Toolbar background="black">
           <TemporaryDrawer
             auth={auth}
             edge="start"
@@ -85,37 +75,6 @@ export default function MenuBar() {
             aria-label="menu"
           />
           <Typography variant="h6" className={classes.title} />
-          {!loading && auth && (
-            <div>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-              </Menu>
-            </div>
-          )}
           {!loading ? (
             <FormGroup>
               <FormControlLabel

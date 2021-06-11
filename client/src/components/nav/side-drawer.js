@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import { useState } from 'react';
+import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
-
 import clsx from 'clsx';
 import {
   makeStyles,
@@ -12,7 +12,6 @@ import {
   ListItemText,
   IconButton,
 } from '@material-ui/core';
-
 import EventIcon from '@material-ui/icons/Event';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
@@ -21,8 +20,7 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ScheduleIcon from '@material-ui/icons/Schedule';
-
-import { useHistory } from 'react-router';
+import { AccountCircle } from '@material-ui/icons';
 
 const useStyles = makeStyles({
   list: {
@@ -36,7 +34,7 @@ const useStyles = makeStyles({
 export default function TemporaryDrawer({ auth }) {
   const history = useHistory();
   const classes = useStyles();
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     top: false,
     left: false,
     bottom: false,
@@ -67,6 +65,7 @@ export default function TemporaryDrawer({ auth }) {
         <List>
           {[
             { text: 'Home', icon: <HomeIcon /> },
+            { text: 'Acount', icon: <AccountCircle /> },
             { text: 'Availibility', icon: <ScheduleIcon /> },
             { text: 'Upcoming', icon: <EventIcon /> },
             { text: 'Settings', icon: <SettingsIcon /> },
@@ -100,25 +99,23 @@ export default function TemporaryDrawer({ auth }) {
   );
 
   return (
-    <div>
-      <React.Fragment key="left">
-        <IconButton
-          edge="start"
-          className={classes.menuButton}
-          color="inherit"
-          aria-label="menu"
-          onClick={toggleDrawer('left', true)}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Drawer
-          anchor="left"
-          open={state.left}
-          onClose={toggleDrawer('left', false)}
-        >
-          {list('left')}
-        </Drawer>
-      </React.Fragment>
+    <div key="left">
+      <IconButton
+        edge="start"
+        className={classes.menuButton}
+        color="inherit"
+        aria-label="menu"
+        onClick={toggleDrawer('left', true)}
+      >
+        <MenuIcon />
+      </IconButton>
+      <Drawer
+        anchor="left"
+        open={state.left}
+        onClose={toggleDrawer('left', false)}
+      >
+        {list('left')}
+      </Drawer>
     </div>
   );
 }

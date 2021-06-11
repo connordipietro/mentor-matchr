@@ -1,5 +1,5 @@
 /* eslint-disable no-dupe-keys */
-import { Container, Button, Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { config } from '../../config/constants';
 
@@ -8,48 +8,36 @@ const StyledButton = withStyles({
     background: 'rgba(255, 255, 255, 0.17)',
     borderRadius: 3,
     border: 0,
-    color: 'white',
-    height: '10vh',
-    width: '40vw',
+    color: 'black',
+    height: '5vh',
+    minWidth: '220px',
+    width: '15vw',
     padding: '0 30px',
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    margin: '20px',
+    boxShadow: '0 3px 5px 2px #03045e',
   },
   label: {
     textTransform: 'none',
   },
 })(Button);
 
-const StyledContainer = withStyles({
-  root: {
-    background: 'black',
-    color: 'white',
-    height: '30.5vh',
-    width: '100%',
-    padding: '0',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})(Container);
-
 export default function Jumbotron() {
   return (
     <>
-      <StyledContainer maxWidth={false}>
+      <div className="bg" />
+      <div className="bg bg2" />
+      <div className="bg bg3" />
+      <div className="content">
         <Typography variant="h2">Mentor Matchr </Typography>
-      </StyledContainer>
-      <StyledContainer maxWidth={false}>
-        <Typography variant="h4">
-          Connecting developers accross experience levels.
-        </Typography>
-      </StyledContainer>
-      <StyledContainer maxWidth={false}>
+        <br />
+        <Typography variant="h5">Connecting developers.</Typography>
+        <br />
         <StyledButton
           onClick={() => (window.location.href = config.url.API_AUTH_GOOGLE)}
         >
-          <Typography variant="h5">Login or Signup </Typography>
+          <Typography variant="h6">Login or Sign up</Typography>
         </StyledButton>
-      </StyledContainer>
+      </div>
     </>
   );
 }

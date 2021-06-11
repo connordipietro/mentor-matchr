@@ -1,5 +1,9 @@
-import './pages.css';
+import CreateAccountForm from '../components/create-account/create-account-form';
 
-export const CreateAccountPage = () => <div className="console-container" />;
+export const CreateAccountPage = () => (
+  <>
+    <CreateAccountForm />
+  </>
+);
 
 export default CreateAccountPage;
