@@ -70,17 +70,6 @@ export default function CreateAccountForm() {
     console.log(mentorMentee, timeState, daysState);
 
     // TODO Post to BE and finish user account setup
-    /* 
-    fetch('https://pointy-gauge.glitch.me/api/form', {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((response) => console.log('Success:', JSON.stringify(response)))
-      .catch((error) => console.error('Error:', error)); */
   };
 
   const handleMentorMenteeChange = (evt) => {
