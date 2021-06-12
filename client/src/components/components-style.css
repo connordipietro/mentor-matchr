@@ -20,14 +20,14 @@
 }
 
 .image-upload {
-  height: 10vh;
+  height: 15vh;
   min-width: 98%;
-  background: #caf0f84d;
+  background: #d1d1d14d;
   border-radius: 10px;
-  border: 2px solid #03045e;
+  border: 2px dashed #000000;
 }
 
 .image-upload:hover {
-  background: #03055e38;
+  background: #38383838;
   cursor: pointer;
 }
