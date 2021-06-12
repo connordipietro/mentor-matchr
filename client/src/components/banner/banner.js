@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { checkIfBanner } from '../../utilities/api';
-import '../components-style.css';
+import '../style/components-style.css';
 
 export default function Banner() {
   const [bannerStatus, setBannerStatus] = useState();

@@ -65,6 +65,7 @@ export default function DayTimeCheckBoxes({ setDaysState, setTimeState }) {
             <FormControlLabel
               control={
                 <Checkbox
+                  className={classes.checkBox}
                   checked={userDays.day}
                   onChange={handleDaysChange}
                   name={day}

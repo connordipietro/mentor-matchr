@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { Container } from '@material-ui/core';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { setPaymentMethod } from '../utilities/api';
-import './stripe-form.css';
+import './style/stripe-form.css';
 import '../pages/pages.css';
 
 export const StripeForm = () => {

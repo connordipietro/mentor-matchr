@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Typography } from '@material-ui/core';
 
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -13,11 +15,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     listStyle: 'none',
     padding: theme.spacing(0.5),
-    margin: 0,
     minHeight: '7vh',
-  },
-  chip: {
-    margin: theme.spacing(0.5),
   },
 }));
 
@@ -85,33 +83,6 @@ export default function ChipsHandler({ setChips }) {
 
   return (
     <>
-      <Typography variant="body1">Your topics:</Typography>
-      <Paper component="ul" className={classes.root}>
-        {
-          (console.log(userChips),
-          userChips.map((data) => {
-            let icon;
-
-            if (data.label === 'React') {
-              icon = <TagFacesIcon />;
-            }
-
-            return (
-              <li key={data.key}>
-                <Chip
-                  icon={icon}
-                  label={data.label}
-                  onDelete={
-                    data.label === 'React' ? undefined : handleDelete(data)
-                  }
-                  className={classes.chip}
-                />
-              </li>
-            );
-          }))
-        }
-      </Paper>
-      <br />
       <Typography variant="body1">All topics:</Typography>
       <Paper component="ul" className={classes.root}>
         {defaultChips.map((data) => {
@@ -126,8 +97,31 @@ export default function ChipsHandler({ setChips }) {
               <Chip
                 icon={icon}
                 label={data.label}
+                variant="outlined"
+                style={{ margin: '2px' }}
                 onClick={() => handleAdd(data)}
-                className={classes.chip}
+              />
+            </li>
+          );
+        })}
+      </Paper>
+      <br />
+      <Typography variant="body1">Your topics:</Typography>
+      <Paper component="ul" className={classes.root}>
+        {userChips.map((data) => {
+          let icon;
+
+          if (data.label === 'React') {
+            icon = <TagFacesIcon />;
+          }
+
+          return (
+            <li key={data.key}>
+              <Chip
+                icon={icon}
+                label={data.label}
+                onDelete={handleDelete(data)}
+                style={{ margin: '2px' }}
               />
             </li>
           );

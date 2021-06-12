@@ -24,9 +24,9 @@ const StyledButton = withStyles({
 export default function Jumbotron() {
   return (
     <>
-      {/*   <div className="bg" />
+      <div className="bg" />
       <div className="bg bg2" />
-      <div className="bg bg3" /> */}
+      <div className="bg bg3" />
       <div className="content">
         <Typography variant="h2">Mentor Matchr </Typography>
         <br />

@@ -25,8 +25,12 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   custom: {
-    backgroundColor: 'black',
     flexGrow: 1,
+    color: 'white',
+    background: 'grey',
+  },
+  customSwitch: {
+    color: 'blue',
   },
 }));
 
@@ -65,8 +69,8 @@ export default function MenuBar() {
 
   return (
     <div className={classes.custom}>
-      <AppBar position="static" background="black">
-        <Toolbar background="black">
+      <AppBar position="static">
+        <Toolbar className={classes.custom}>
           <TemporaryDrawer
             auth={auth}
             edge="start"
@@ -83,6 +87,7 @@ export default function MenuBar() {
                     checked={auth}
                     onChange={handleChange}
                     aria-label="login switch"
+                    className={classes.customSwitch}
                   />
                 }
                 label={auth ? 'Logout' : 'Login // Signup'}

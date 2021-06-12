@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react';
 import ImageUploading from 'react-images-uploading';
-import '../components-style.css';
+import '../style/components-style.css';
 import { PropTypes } from 'prop-types';
 import BackupIcon from '@material-ui/icons/Backup';
 
