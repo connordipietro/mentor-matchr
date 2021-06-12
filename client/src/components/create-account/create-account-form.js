@@ -15,6 +15,8 @@ import {
 } from '@material-ui/core';
 import { useState } from 'react';
 import { useStyles } from './create-account-form-styles';
+import AvatarUpload from './avatar-upload';
+import ChipsHandler from './interest-chips/chip-handler';
 
 export default function CreateAccountForm() {
   const [mentorMentee, setMentorMentee] = useState({ mentorMentee: 'mentor' });
@@ -34,6 +36,10 @@ export default function CreateAccountForm() {
     afternoon: false,
     evening: false,
   });
+
+  const [avatar, setAvatar] = useState([]);
+
+  const [chips, setChips] = useState([]);
 
   const [error, setError] = useState({
     days: null,
@@ -67,7 +73,15 @@ export default function CreateAccountForm() {
       return;
     }
 
-    console.log(mentorMentee, timeState, daysState);
+    const data = {
+      mentorMentee,
+      timeState,
+      daysState,
+      userAvatar: avatar,
+      userInterests: chips,
+    };
+
+    console.log(data);
 
     // TODO Post to BE and finish user account setup
   };
@@ -114,7 +128,7 @@ export default function CreateAccountForm() {
                   label="mentee"
                 />
               </RadioGroup>
-              <Divider />
+              <Divider className={classes.divider} />
             </FormControl>
             <FormControl
               required
@@ -149,7 +163,7 @@ export default function CreateAccountForm() {
               <FormHelperText>
                 {error.days ? 'Please make at least one selection' : null}
               </FormHelperText>
-              <Divider />
+              <Divider className={classes.divider} />
             </FormControl>
             <FormControl
               required
@@ -178,7 +192,12 @@ export default function CreateAccountForm() {
                 {error.time ? 'Please make at least one selection' : null}
               </FormHelperText>
             </FormControl>
-
+            <Divider className={classes.divider} />
+            <Typography variant="h6">Select your interests</Typography>
+            <ChipsHandler chips={chips} setChips={setChips} />
+            <Divider className={classes.divider} />
+            <AvatarUpload setAvatar={setAvatar} />
+            <Divider className={classes.divider} />
             <Button
               type="submit"
               variant="outlined"

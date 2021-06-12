@@ -1,3 +1,4 @@
+import { Container } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getLoginStatus } from '../utilities/api';
@@ -21,10 +22,10 @@ export const PaymentPage = () => {
   });
 
   return !loading ? (
-    <div>
+    <Container maxWidth="sm">
       <h3>Payment Page</h3>
       <StripeForm />
-    </div>
+    </Container>
   ) : (
     <h3>Loading...</h3>
   );

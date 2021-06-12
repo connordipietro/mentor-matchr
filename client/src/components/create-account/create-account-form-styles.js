@@ -29,4 +29,8 @@ export const useStyles = makeStyles((theme) => ({
   formControl: {
     minWidth: '500px',
   },
+  divider: {
+    marginTop: '15px',
+    marginBottom: '15px',
+  },
 }));
