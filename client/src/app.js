@@ -8,6 +8,8 @@ import {
   AdminPage,
   HomePage,
   AccountPage,
+  MatchesPage,
+  SettingsPage,
 } from './pages';
 import { CreateAccountPage } from './pages/create-account';
 
@@ -26,13 +28,15 @@ function App() {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/account" component={AccountPage} />
+          <Route exact path="/matches" component={MatchesPage} />
+          <Route exact path="/settings" component={SettingsPage} />
           <Route exact path="/payment">
             <Elements stripe={stripePromise}>
               <PaymentPage />
             </Elements>
           </Route>
           <Route exact path="/products" component={ProductsPage} />
-          <Route exact path="/account" component={AccountPage} />
           <Route exact path="/admin" component={AdminPage} />
           <Route exact path="/home" component={HomePage} />
           <Route exact path="/create-account" component={CreateAccountPage} />

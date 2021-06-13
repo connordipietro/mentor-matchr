@@ -12,7 +12,7 @@ import {
   ListItemText,
   IconButton,
 } from '@material-ui/core';
-import EventIcon from '@material-ui/icons/Event';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -66,8 +66,7 @@ export default function TemporaryDrawer({ auth }) {
           {[
             { text: 'Home', icon: <HomeIcon /> },
             { text: 'Account', icon: <AccountCircle /> },
-            { text: 'Availibility', icon: <ScheduleIcon /> },
-            { text: 'Upcoming', icon: <EventIcon /> },
+            { text: 'Matches', icon: <DoneAllIcon /> },
             { text: 'Settings', icon: <SettingsIcon /> },
           ].map((item) => (
             <ListItem

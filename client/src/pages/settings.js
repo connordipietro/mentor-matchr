@@ -1,6 +1,6 @@
 import useIsAccountSetup from '../utilities/accountSetupHook';
 
-export const MatchesPage = () => {
+export const SettingsPage = () => {
   const isAccountSetup = useIsAccountSetup();
 
   return (
@@ -11,4 +11,4 @@ export const MatchesPage = () => {
   );
 };
 
-export default MatchesPage;
+export default SettingsPage;
