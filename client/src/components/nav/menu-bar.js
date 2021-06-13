@@ -57,7 +57,7 @@ export default function MenuBar() {
   // Verify login status
   useEffect(() => {
     getLoginStatus()
-      .then(() => {
+      .then((res) => {
         setLoading(false);
         setAuth(true);
       })

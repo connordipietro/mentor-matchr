@@ -2,9 +2,18 @@ const router = require('express').Router();
 const passport = require('passport');
 
 // /api/auth/status
-router.get('/status', async (req, res) =>
-  req.user ? res.send(req.user) : res.sendStatus(401)
-);
+router.get('/status', async (req, res) => {
+  // User exists
+  if (req.user) {
+    // User has finished account set up
+    if (req.user.settings) {
+      return res.send({ status: 200, accountSetUp: true });
+    }
+    // User hasn't created account
+    return res.send({ status: 200, accountSetUp: false });
+  }
+  res.sendStatus(401);
+});
 
 // /api/auth/google
 router.get('/google', passport.authenticate('google'), () => {

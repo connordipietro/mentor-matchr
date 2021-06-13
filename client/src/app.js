@@ -7,6 +7,7 @@ import {
   ProductsPage,
   AdminPage,
   HomePage,
+  AccountPage,
 } from './pages';
 import { CreateAccountPage } from './pages/create-account';
 
@@ -31,6 +32,7 @@ function App() {
             </Elements>
           </Route>
           <Route exact path="/products" component={ProductsPage} />
+          <Route exact path="/account" component={AccountPage} />
           <Route exact path="/admin" component={AdminPage} />
           <Route exact path="/home" component={HomePage} />
           <Route exact path="/create-account" component={CreateAccountPage} />

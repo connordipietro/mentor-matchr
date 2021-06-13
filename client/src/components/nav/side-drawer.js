@@ -65,7 +65,7 @@ export default function TemporaryDrawer({ auth }) {
         <List>
           {[
             { text: 'Home', icon: <HomeIcon /> },
-            { text: 'Acount', icon: <AccountCircle /> },
+            { text: 'Account', icon: <AccountCircle /> },
             { text: 'Availibility', icon: <ScheduleIcon /> },
             { text: 'Upcoming', icon: <EventIcon /> },
             { text: 'Settings', icon: <SettingsIcon /> },
