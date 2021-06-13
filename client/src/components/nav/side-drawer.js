@@ -19,7 +19,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import SettingsIcon from '@material-ui/icons/Settings';
-import ScheduleIcon from '@material-ui/icons/Schedule';
 import { AccountCircle } from '@material-ui/icons';
 
 const useStyles = makeStyles({
