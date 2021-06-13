@@ -6,7 +6,7 @@ export const CreateAccountPage = () => {
   const isAuth = useAuthCheck();
   const isAccountSetup = useIsAccountSetup();
 
-  return <>{isAuth && isAccountSetup ? <CreateAccountForm /> : null}</>;
+  return <>{isAuth && !isAccountSetup ? <CreateAccountForm /> : null}</>;
 };
 
 export default CreateAccountPage;

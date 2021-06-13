@@ -10,6 +10,7 @@ router.get('/status', async (req, res) => {
       return res.send({ status: 200, accountSetUp: true });
     }
     // User hasn't created account
+    console.log('user hasnt created account');
     return res.send({ status: 200, accountSetUp: false });
   }
   res.sendStatus(401);

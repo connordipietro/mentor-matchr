@@ -7,6 +7,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { useState } from 'react';
+import { useHistory } from 'react-router';
 import { useStyles } from './create-account-form-styles';
 import AvatarUpload from './avatar-upload';
 import ChipsHandler from './interest-chips/chip-handler';
@@ -24,6 +25,8 @@ export default function CreateAccountForm() {
   const [bio, setBio] = useState('');
 
   const [error, setError] = useState(null);
+
+  const history = useHistory();
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
@@ -64,7 +67,7 @@ export default function CreateAccountForm() {
     };
     console.log(data);
     // Send to server
-    createAccount(data);
+    createAccount(data).then(() => history.push('/account'));
   };
 
   const classes = useStyles();
