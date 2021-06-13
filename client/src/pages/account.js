@@ -7,7 +7,7 @@ export const AccountPage = () => {
 
   return (
     <>
-      {!isAccountSetup || !isAuth ? <h1>Redirecting</h1> : null}
+      {!isAccountSetup || !isAuth ? null : <h1>Account content</h1>}
       <div />
     </>
   );

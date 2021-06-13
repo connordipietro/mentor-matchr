@@ -23,7 +23,8 @@
     "mongoose": "^5.12.12",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
-    "stripe": "^8.153.0"
+    "stripe": "^8.153.0",
+    "uuid": "^8.3.2"
   },
   "eslintConfig": {
     "extends": [
