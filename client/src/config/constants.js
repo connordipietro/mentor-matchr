@@ -15,6 +15,7 @@ const prod = {
     ABOUT: '',
     CONTACT: '',
     DONATE: '',
+    API_CREATE_USER: `https://mentor-matchr.herokuapp.com/api/user/account/create`,
   },
 };
 
@@ -35,6 +36,7 @@ const dev = {
     ABOUT: '',
     CONTACT: '',
     DONATE: '',
+    API_CREATE_USER: `http://localhost:5000/api/user/account/create`,
   },
 };
 

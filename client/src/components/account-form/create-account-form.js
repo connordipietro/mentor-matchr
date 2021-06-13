@@ -12,6 +12,8 @@ import AvatarUpload from './avatar-upload';
 import ChipsHandler from './interest-chips/chip-handler';
 import DayTimeCheckBoxes from './day-time-checkboxes';
 import MentoMenteeRadioGroup from './mentor-mentee-radiogroup';
+import { createAccount } from '../../utilities/api';
+import UserBio from './user-bio';
 
 export default function CreateAccountForm() {
   const [mentorMentee, setMentorMentee] = useState({});
@@ -19,38 +21,38 @@ export default function CreateAccountForm() {
   const [timeState, setTimeState] = useState({});
   const [avatar, setAvatar] = useState([]);
   const [chips, setChips] = useState([]);
+  const [bio, setBio] = useState('');
 
-  const [error, setError] = useState({
-    days: null,
-    time: null,
-  });
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
 
-    // Check for no days of the week being selected, set error and return
+    // Check for all false values on days checkboxes
     const allDaysFalse = Object.keys(daysState).every((day) => !daysState[day]);
 
     if (allDaysFalse) {
-      setError({
-        ...error.time,
-        days: 'Please select at least one day of the week to continue',
-      });
+      setError('Please select at least day of availibility');
       return;
     }
 
-    // Check for no time being selected, set error and return
+    // Check for all false values on time checkboxes
     const allTimesFalse = Object.keys(timeState).every(
       (time) => !timeState[time]
     );
 
     if (allTimesFalse) {
-      setError({
-        ...error.days,
-        time: 'Please select at least one time to continute',
-      });
+      setError('Please select at least one time of availibility');
       return;
     }
+
+    // Checks for empty chips (interests) array
+    if (!chips.length) {
+      setError('Please select at least one interest');
+      return;
+    }
+
+    setError('');
 
     const data = {
       mentorMentee,
@@ -58,11 +60,11 @@ export default function CreateAccountForm() {
       daysState,
       userAvatar: avatar,
       userInterests: chips,
+      userBio: bio,
     };
 
-    console.log(data);
-
-    // TODO Post to BE and finish user account setup
+    // Send to server
+    createAccount(data);
   };
 
   const classes = useStyles();
@@ -86,6 +88,10 @@ export default function CreateAccountForm() {
             <Typography variant="h6">Upload a profile picture</Typography>
             <AvatarUpload setAvatar={setAvatar} />
             <Divider className={classes.divider} />
+            <Typography variant="h6">Tell us about yourself:</Typography>
+            <UserBio setBio={setBio} />
+            <Divider className={classes.divider} />
+            {error ? <Typography variant="h6">{error}</Typography> : null}
             <Button
               type="submit"
               variant="outlined"

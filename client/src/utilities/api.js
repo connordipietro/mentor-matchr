@@ -29,6 +29,9 @@ export const postBanner = (data) =>
 export const logout = () => axios.get(config.url.API_LOGOUT, credentials);
 console.log(config.url.API_LOGOUT);
 
+export const createAccount = (data) =>
+  axios.post(config.url.API_CREATE_USER, data, credentials);
+
 // Auth status check for redux store
 export const GET_AUTH_STATUS = 'GET_AUTH_STATUS';
 
