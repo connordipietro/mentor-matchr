@@ -19,6 +19,8 @@ export default function AvatarUpload({ setAvatar }) {
       value={images}
       onChange={onChange}
       dataURLKey="data_url"
+      maxFileSize={5000000}
+      acceptType={['jpg', 'jpeg', 'gif', 'png']}
     >
       {({
         imageList,
@@ -27,6 +29,7 @@ export default function AvatarUpload({ setAvatar }) {
         onImageRemove,
         isDragging,
         dragProps,
+        errors,
       }) => (
         <div className="upload__image-wrapper">
           <button
@@ -55,6 +58,14 @@ export default function AvatarUpload({ setAvatar }) {
                 </div>
               </div>
             ))}
+            {errors && (
+              <div>
+                {errors.maxFileSize && <span>Max image file size is 5mb.</span>}
+                {errors.acceptType && (
+                  <span>Only jpg, gif, and png are allowed.</span>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}

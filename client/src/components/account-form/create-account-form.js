@@ -56,13 +56,13 @@ export default function CreateAccountForm() {
 
     const data = {
       mentorMentee,
-      timeState,
-      daysState,
+      days: daysState,
+      time: timeState,
       userAvatar: avatar,
       userInterests: chips,
       userBio: bio,
     };
-
+    console.log(data);
     // Send to server
     createAccount(data);
   };

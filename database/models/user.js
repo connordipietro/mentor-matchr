@@ -21,6 +21,33 @@ const CustomerSchema = new Schema({
   },
 });
 
+const SettingsSchema = new Schema({
+  mentorMentee: {
+    type: Object,
+    required: true,
+  },
+  days: {
+    type: Object,
+    required: true,
+  },
+  time: {
+    type: Object,
+    required: true,
+  },
+  avatar: {
+    type: Array,
+    required: true,
+  },
+  interests: {
+    type: Array,
+    required: true,
+  },
+  bio: {
+    type: String,
+    required: true,
+  },
+});
+
 const UserSchema = new Schema({
   email: {
     type: String,
@@ -35,8 +62,13 @@ const UserSchema = new Schema({
     default: null,
     required: false,
   },
+  settings: {
+    type: SettingsSchema,
+    defualt: null,
+    required: false,
+  },
 });
 
 module.exports = mongoose.model('Customer', CustomerSchema);
-
+module.exports = mongoose.model('Settings', SettingsSchema);
 module.exports = mongoose.model('User', UserSchema);
