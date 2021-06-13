@@ -12,8 +12,11 @@ router.get('/google', passport.authenticate('google'), () => {
 });
 
 // /api/auth/google/redirect
-router.get('/google/redirect', passport.authenticate('google'), (_req, res) => {
-  res.redirect(process.env.CREATE_ACCOUNT);
+router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
+  if (!req.user.settings) {
+    return res.redirect(process.env.CREATE_ACCOUNT);
+  }
+  res.redirect(process.env.EXISTING_USER);
 });
 
 router.get('/google/logout', (req, res) => {
