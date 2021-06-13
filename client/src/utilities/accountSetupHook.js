@@ -11,6 +11,7 @@ export default function useIsAccountSetup() {
     getLoginStatus()
       .then((res) => {
         if (!res.data.accountSetUp) history.push('/create-account');
+        if (res.data.accountSetUp) history.push('/account');
         if (isMounted) setIsSetUp(true);
       })
       .catch((err) => {
