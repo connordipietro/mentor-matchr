@@ -1,3 +1,4 @@
+import { Container } from '@material-ui/core';
 import UserProfileView from '../components/account/profile-card';
 import useIsAccountSetup from '../utilities/accountSetupHook';
 import useAuthCheck from '../utilities/authCheckHook';
@@ -10,8 +11,9 @@ export const AccountPage = () => {
     <>
       {!isAccountSetup || !isAuth ? null : (
         <>
-          <h1>User Profile </h1>
-          <UserProfileView requestedEmail="user" />
+          <Container maxWidth="sm" style={{ marginTop: '5vh' }}>
+            <UserProfileView requestedEmail="user" />
+          </Container>
         </>
       )}
       <div />

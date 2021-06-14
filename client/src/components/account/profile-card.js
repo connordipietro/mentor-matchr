@@ -1,23 +1,26 @@
 import React, { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import _ from 'lodash';
 import clsx from 'clsx';
 import {
   Card,
   CardHeader,
-  CardMedia,
   CardContent,
   CardActions,
   Collapse,
   Avatar,
   IconButton,
   Typography,
+  Paper,
+  Chip,
 } from '@material-ui/core/';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import defaultAvatar from '../style/defaultavatar.png';
 import { getProfileInfo } from '../../utilities/api';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,18 +41,28 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
+  chips: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    listStyle: 'none',
+    padding: 5,
+    minHeight: '7vh',
+  },
 }));
 
 export default function UserProfileView({ requestedEmail }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [profileInfo, setProfileInfo] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
   useEffect(() => {
     const data = { email: requestedEmail };
     getProfileInfo(data)
       .then((res) => {
-        console.log(res);
+        setProfileInfo(res.data);
+        setLoading(false);
       })
       .catch((err) => console.log(err));
   }, [requestedEmail]);
@@ -59,61 +72,108 @@ export default function UserProfileView({ requestedEmail }) {
   };
 
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Users Name Here"
-        subheader="Mentor / Mentee"
-      />
-      <CardMedia
-        className={classes.media}
-        image="/static/images/cards/paella.jpg"
-        title="Paella dish"
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          Bio will go here
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          Availibility
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          Times
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-        </CardContent>
-      </Collapse>
-    </Card>
+    <>
+      {loading ? (
+        <h1>Loading</h1>
+      ) : (
+        <Card className={classes.root}>
+          <CardHeader
+            avatar={
+              <Avatar
+                aria-label="recipe"
+                className={classes.avatar}
+                src={
+                  profileInfo.settings.avatar[0].data_url
+                    ? profileInfo.settings.avatar[0].data_url
+                    : defaultAvatar
+                }
+              />
+            }
+            action={
+              <IconButton aria-label="settings">
+                <MoreVertIcon />
+              </IconButton>
+            }
+            title={profileInfo.name}
+            subheader={profileInfo.settings.mentorMentee.mentorMentee}
+          />
+          <CardContent>
+            <Typography variant="body2" color="textPrimary" component="p">
+              Bio:
+            </Typography>
+            <Typography variant="body1" color="textSecondary" component="p">
+              {profileInfo.settings.bio}
+            </Typography>
+            <br />
+            <Typography variant="body2" color="textPrimary" component="p">
+              I can usually meet on:
+            </Typography>
+            {_.keys(_.pickBy(profileInfo.settings.days)).map((day) => (
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                component="p"
+                key={day}
+              >
+                {day}
+              </Typography>
+            ))}
+            <br />
+            <Typography variant="body2" color="textPrimary" component="p">
+              I prefer the:
+            </Typography>
+            {_.keys(_.pickBy(profileInfo.settings.time)).map((time) => (
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                component="p"
+                key={time}
+              >
+                {time}
+              </Typography>
+            ))}
+            <br />
+            <Typography variant="body2" color="textPrimary" component="p">
+              Interests:
+            </Typography>
+            <Paper component="ul" className={classes.chips}>
+              {profileInfo.settings.interests.map((data) => (
+                <li key={data.key}>
+                  <Chip
+                    label={data.label}
+                    variant="default"
+                    style={{ margin: '2px' }}
+                  />
+                </li>
+              ))}
+            </Paper>
+          </CardContent>
+          <CardActions disableSpacing>
+            <IconButton aria-label="add to favorites">
+              <FavoriteIcon />
+            </IconButton>
+            <IconButton aria-label="share">
+              <ShareIcon />
+            </IconButton>
+            <IconButton
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded,
+              })}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+              <Typography paragraph>Method:</Typography>
+            </CardContent>
+          </Collapse>
+        </Card>
+      )}
+    </>
   );
 }
 
