@@ -11,7 +11,42 @@ router.get('/matches', async (req, res) => {
 
     const matches = await matchFinder(req.user);
 
-    return res.send({ status: 200, data: matches });
+    // Removes info FE doesn't need to know about users
+    const results = matches.map((match) => ({
+      email: match.email,
+      settings: match.settings,
+      name: match.name,
+    }));
+
+    return res.send({ status: 200, data: results });
+  }
+  return res.sendStatus(401);
+});
+
+// Accepts an email in the post body and gets user profile info for that email.
+// /api/user/profile
+router.post('/profile', async (req, res) => {
+  if (req.user) {
+    const { id } = req.user;
+    const { email } = req.body;
+    let queryEmail;
+
+    if (!id) return res.sendStatus(400);
+
+    if (email === 'user') {
+      queryEmail = req.user.email;
+    } else {
+      queryEmail = email;
+    }
+
+    const profileInfo = await user.find({ email: queryEmail });
+
+    return res.send({
+      status: 200,
+      email: profileInfo[0].email,
+      settings: profileInfo[0].settings,
+      name: profileInfo[0].name,
+    });
   }
   return res.sendStatus(401);
 });

@@ -53,6 +53,10 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
   id: {
     type: String,
     required: true,

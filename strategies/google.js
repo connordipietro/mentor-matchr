@@ -26,7 +26,8 @@ passport.use(
       scope: ['email', 'profile'],
     },
     async (accessToken, refreshToken, profile, done) => {
-      const { email, sub } = profile._json;
+      const { email, sub, name } = profile._json;
+      console.log(profile._json);
       try {
         const userInDB = await User.findOne({ id: sub });
         if (!userInDB) {
@@ -34,6 +35,7 @@ passport.use(
           const stripeCustomer = await createCustomer({ email });
           const newUser = await User.create({
             email,
+            name: name || 'Anonymous',
             id: sub,
             customer: {
               stripeId: stripeCustomer.id,

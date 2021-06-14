@@ -3,7 +3,7 @@ const user = require('../database/models/user');
 
 const matchFinder = async (requestineUser) => {
   const { mentorMentee, days, time, interests } = requestineUser.settings;
-  const matches = [];
+  let matches = [];
   await user.find({}, function (err, docs) {
     // Filter users by mentors or mentees given requesting user status
     const filterByMentorMentee = docs.filter(
@@ -49,8 +49,7 @@ const matchFinder = async (requestineUser) => {
 
       return foundInterestMatches;
     });
-
-    matches.push([...new Set(foundInterestMatches)]);
+    matches = [...new Set(foundInterestMatches)];
   });
   return matches;
 };

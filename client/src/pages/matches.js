@@ -1,3 +1,4 @@
+import MatchesView from '../components/matches/matches-view';
 import useIsAccountSetup from '../utilities/accountSetupHook';
 import useAuthCheck from '../utilities/authCheckHook';
 
@@ -7,7 +8,14 @@ export const MatchesPage = () => {
 
   return (
     <>
-      {!isAccountSetup || !isAuth ? <h1>Redirecting</h1> : null}
+      {!isAccountSetup || !isAuth ? (
+        <h1>Redirecting</h1>
+      ) : (
+        <>
+          <h1>Matches Page</h1>
+          <MatchesView />
+        </>
+      )}
       <div />
     </>
   );
