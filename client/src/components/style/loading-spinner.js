@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { css } from '@emotion/react';
 import MoonLoader from 'react-spinners/MoonLoader';
 
-// Can be a string as well. Need to ensure each key-value pair ends with ;
 const override = css`
   display: block;
   margin: 0 auto;
@@ -14,7 +13,7 @@ export const LoadingSpinner = ({ loading }) => (
     color="red"
     loading={loading}
     css={override}
-    size={15}
+    size={50}
     speedMultiplier={0.5}
   />
 );

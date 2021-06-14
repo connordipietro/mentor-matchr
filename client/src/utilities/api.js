@@ -34,6 +34,9 @@ export const createAccount = (data) =>
 export const getProfileInfo = (data) =>
   axios.post(config.url.API_GET_PROFILE, data, credentials);
 
+export const getMatches = async () =>
+  axios.get(config.url.API_GET_MATCHES, credentials);
+
 // Auth status check for redux store
 export const GET_AUTH_STATUS = 'GET_AUTH_STATUS';
 

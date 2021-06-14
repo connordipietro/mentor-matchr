@@ -14,6 +14,7 @@ import {
   Typography,
   Paper,
   Chip,
+  Container,
 } from '@material-ui/core/';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -22,6 +23,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import defaultAvatar from '../style/defaultavatar.png';
 import { getProfileInfo } from '../../utilities/api';
+import { LoadingSpinner } from '../style/loading-spinner';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,11 +72,10 @@ export default function UserProfileView({ requestedEmail }) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
   return (
     <>
       {loading ? (
-        <h1>Loading</h1>
+        <LoadingSpinner loading={loading} />
       ) : (
         <Card className={classes.root}>
           <CardHeader
@@ -136,7 +137,7 @@ export default function UserProfileView({ requestedEmail }) {
             <Typography variant="body2" color="textPrimary" component="p">
               Interests:
             </Typography>
-            <Paper component="ul" className={classes.chips}>
+            <Container component="ul" className={classes.chips}>
               {profileInfo.settings.interests.map((data) => (
                 <li key={data.key}>
                   <Chip
@@ -146,7 +147,7 @@ export default function UserProfileView({ requestedEmail }) {
                   />
                 </li>
               ))}
-            </Paper>
+            </Container>
           </CardContent>
           <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">
