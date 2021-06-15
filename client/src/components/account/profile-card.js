@@ -84,7 +84,7 @@ export default function UserProfileView({ requestedEmail }) {
                 aria-label="recipe"
                 className={classes.avatar}
                 src={
-                  profileInfo.settings.avatar[0].data_url
+                  !_.isEmpty(profileInfo.settings.avatar)
                     ? profileInfo.settings.avatar[0].data_url
                     : defaultAvatar
                 }

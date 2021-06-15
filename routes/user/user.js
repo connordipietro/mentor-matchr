@@ -17,8 +17,8 @@ router.get('/matches', async (req, res) => {
       settings: match.settings,
       name: match.name,
     }));
-    console.log(results);
-    return res.send({ status: 200, data: results });
+
+    return res.send({ status: 200, matches: results });
   }
   return res.sendStatus(401);
 });

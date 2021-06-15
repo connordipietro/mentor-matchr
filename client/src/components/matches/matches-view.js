@@ -9,14 +9,24 @@ export default function MatchesView() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log('using effect');
     getMatches()
       .then((res) => {
+        setMatches(res.data.matches);
         setLoading(false);
-        // setMatches(res);
-        console.log(res);
       })
       .catch((err) => console.log(err));
   }, []);
 
-  return <>{loading ? <LoadingSpinner loading={loading} /> : <h1>Test</h1>}</>;
+  const renderMatches = () => {
+    console.log(matches);
+    const allMatches = matches.map((match) => (
+      <UserProfileView requestedEmail={match.email} key={match.email} />
+    ));
+    return allMatches;
+  };
+
+  return (
+    <>{loading ? <LoadingSpinner loading={loading} /> : renderMatches()}</>
+  );
 }
