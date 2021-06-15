@@ -13,6 +13,7 @@ import {
 } from './pages';
 import { CreateAccountPage } from './pages/create-account';
 import { EditAccountPage } from './pages/edit-account';
+import { ConnectionsPage } from './pages/connections';
 import Banner from './components/banner/banner';
 import MenuBar from './components/nav/menu-bar';
 
@@ -41,6 +42,7 @@ function App() {
           <Route exact path="/home" component={HomePage} />
           <Route exact path="/create-account" component={CreateAccountPage} />
           <Route exact path="/edit-account" component={EditAccountPage} />
+          <Route exact path="/connections" component={ConnectionsPage} />
         </Switch>
       </Router>
     </>

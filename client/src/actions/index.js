@@ -8,11 +8,10 @@ const credentials = {
 };
 
 export function getAuthStatus() {
-  return axios.get(config.url.API_AUTH_STATUS, credentials).then((response) => {
-    console.log(response);
-    return {
+  return axios
+    .get(config.url.API_AUTH_STATUS, credentials)
+    .then((response) => ({
       type: GET_AUTH_STATUS,
       payload: response,
-    };
-  });
+    }));
 }

@@ -7,7 +7,6 @@ const DEFAULT_STATE = {
 const GetAuthStatusReducer = function (state = DEFAULT_STATE, action) {
   switch (action.type) {
     case GET_AUTH_STATUS:
-      console.log('test');
       return {
         isAuth: action.payload,
       };

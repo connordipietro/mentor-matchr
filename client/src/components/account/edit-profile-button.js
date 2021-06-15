@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 
 export default function EditProfileButton() {
   const history = useHistory();
-  const handleClick = (event) => {
+  const handleClick = () => {
     history.push('/edit-account');
   };
 

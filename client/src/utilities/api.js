@@ -37,6 +37,15 @@ export const getProfileInfo = (data) =>
 export const getMatches = async () =>
   axios.get(config.url.API_GET_MATCHES, credentials);
 
+export const postConnections = async (data) =>
+  axios.post(config.url.API_POST_CONNECTIONS, data, credentials);
+
+export const getConnections = async (data) =>
+  axios.post(config.url.API_GET_CONNECTIONS, data, credentials);
+
+export const getAcceptedConnections = async (data) =>
+  axios.post(config.url.API_GET_ACCEPTED_CONNECTIONS, data, credentials);
+
 // Auth status check for redux store
 export const GET_AUTH_STATUS = 'GET_AUTH_STATUS';
 

@@ -27,10 +27,13 @@ const useStyles = makeStyles((theme) => ({
   custom: {
     flexGrow: 1,
     color: 'white',
-    background: 'grey',
+    background: 'steelblue',
   },
   customSwitch: {
     color: 'blue',
+  },
+  drawerButton: {
+    margin: 2,
   },
 }));
 

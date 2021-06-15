@@ -10,13 +10,11 @@ export const AdminPage = () => {
 
   useEffect(() => {
     getAdminStatus()
-      .then(({ data }) => {
-        console.log(data);
+      .then(() => {
         setLoading(false);
         setAdminStatus(true);
       })
       .catch((err) => {
-        console.log(err);
         setLoading(false);
         setAdminStatus(false);
       });

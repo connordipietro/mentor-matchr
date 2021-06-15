@@ -2,26 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
-import clsx from 'clsx';
 import {
   Card,
   CardHeader,
   CardContent,
-  CardActions,
-  Collapse,
   Avatar,
-  IconButton,
   Typography,
   Chip,
 } from '@material-ui/core/';
 import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import defaultAvatar from '../style/defaultavatar.png';
 import { getProfileInfo } from '../../utilities/api';
 import { LoadingSpinner } from '../style/loading-spinner';
 import EditProfileButton from './edit-profile-button';
+import ConnectButton from './connect-button';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -57,7 +51,6 @@ const useStyles = makeStyles(() => ({
 
 export default function UserProfileView({ requestedEmail, type }) {
   const classes = useStyles();
-  const [expanded, setExpanded] = useState(false);
   const [profileInfo, setProfileInfo] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -71,20 +64,6 @@ export default function UserProfileView({ requestedEmail, type }) {
       .catch((err) => console.log(err));
   }, [requestedEmail]);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   return (
     <>
       {loading ? (
@@ -103,7 +82,13 @@ export default function UserProfileView({ requestedEmail, type }) {
                 }
               />
             }
-            action={type === 'user' ? <EditProfileButton /> : null}
+            action={
+              type === 'user' ? (
+                <EditProfileButton />
+              ) : (
+                <ConnectButton requestedEmail={requestedEmail} />
+              )
+            }
             title={profileInfo.name}
             subheader={profileInfo.settings.mentorMentee.mentorMentee}
           />
@@ -139,23 +124,6 @@ export default function UserProfileView({ requestedEmail, type }) {
               ))}
             </div>
           </CardContent>
-          {type === 'user' ? null : (
-            <CardActions disableSpacing>
-              <IconButton aria-label="add to favorites">
-                <FavoriteIcon />
-              </IconButton>
-              <IconButton aria-label="share">
-                <ShareIcon />
-              </IconButton>
-              <IconButton
-                className={classes.rightIcon}
-                onClick={handleExpandClick}
-                aria-label="show more"
-              >
-                <ExpandMoreIcon />
-              </IconButton>
-            </CardActions>
-          )}
         </Card>
       )}
     </>

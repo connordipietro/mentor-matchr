@@ -11,6 +11,7 @@ import {
   ListItemIcon,
   ListItemText,
   IconButton,
+  Badge,
 } from '@material-ui/core';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import HomeIcon from '@material-ui/icons/Home';
@@ -18,7 +19,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import MenuIcon from '@material-ui/icons/Menu';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import SettingsIcon from '@material-ui/icons/Settings';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import { AccountCircle } from '@material-ui/icons';
 
 const useStyles = makeStyles({
@@ -66,6 +67,7 @@ export default function TemporaryDrawer({ auth }) {
             { text: 'Home', icon: <HomeIcon /> },
             { text: 'Account', icon: <AccountCircle /> },
             { text: 'Matches', icon: <DoneAllIcon /> },
+            { text: 'Connections', icon: <SupervisedUserCircleIcon /> },
           ].map((item) => (
             <ListItem
               button
@@ -104,7 +106,9 @@ export default function TemporaryDrawer({ auth }) {
         aria-label="menu"
         onClick={toggleDrawer('left', true)}
       >
-        <MenuIcon />
+        <Badge badgeContent={4} color="secondary">
+          <MenuIcon />
+        </Badge>
       </IconButton>
       <Drawer
         anchor="left"

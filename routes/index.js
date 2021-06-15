@@ -5,12 +5,14 @@ const subscriptionRoutes = require('./subscriptions/subscriptions');
 const adminRoutes = require('./admin/admin');
 const userRoutes = require('./user/user');
 const devRoutes = require('./admin/dev/dev-routes');
+const connectionRoutes = require('./user/connections');
 
 router.use('/auth', authRoutes);
 router.use('/payment', paymentRoutes);
 router.use('/subscriptions', subscriptionRoutes);
 router.use('/admin', adminRoutes);
 router.use('/user', userRoutes);
+router.use('/user/connections/', connectionRoutes);
 router.use('/dev', devRoutes);
 
 module.exports = router;

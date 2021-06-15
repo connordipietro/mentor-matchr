@@ -22,8 +22,6 @@ router.get('/banner', async (req, res) => {
 module.exports = router;
 
 router.post('/banner', async (req, res) => {
-  console.log(req.body);
-
   const { expireTime, bannerMsg } = req.body;
   // Unrptoected route for testing, would need to verfiy admin eventually
   const result = await Banner.create({
