@@ -5,27 +5,24 @@ const User = require('../../../database/models/user');
 // /api/dev/data
 router.get('/data', async (req, res) => {
   const newUser = await User.create({
-    email: 'test2@mentee.com',
+    email: 'test3@mentee.com',
     id: uuidv4(),
+    name: 'Test Mentee 3',
     settings: {
       avatar: [],
-      interests: [
-        { key: 0, label: 'Angular' },
-        { key: 1, label: 'jQuery' },
-        { key: 2, label: 'Polymer' },
-      ],
-      bio: 'Test mentee 2. I have a few interests and limited availibility',
+      interests: [{ key: 2, label: 'Polymer' }],
+      bio: 'Test mentee 3. I have a few interests and limited availibility',
       days: {
         monday: true,
         tuesday: true,
-        wednesday: true,
+        wednesday: false,
         thursday: false,
         friday: false,
-        saturday: false,
+        saturday: true,
         sunday: false,
       },
       mentorMentee: { mentorMentee: 'mentee' },
-      time: { morning: true, afternoon: false, evening: false },
+      time: { morning: true, afternoon: false, evening: true },
     },
   });
   res.send(newUser);

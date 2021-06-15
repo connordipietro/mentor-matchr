@@ -11,7 +11,6 @@ export default function MatchesView() {
   useEffect(() => {
     getAcceptedConnections()
       .then((res) => {
-        console.log(res);
         if (res.data.connections.initiated) console.log('yes');
 
         const acceptedMatches = [];
@@ -25,9 +24,6 @@ export default function MatchesView() {
             acceptedMatches.push(match)
           );
         }
-        /* setMatches(res.data.matches);
-        setLoading(false); */
-        console.log(acceptedMatches);
         setMatches(acceptedMatches);
         setLoading(false);
       })
