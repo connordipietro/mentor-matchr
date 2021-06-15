@@ -12,7 +12,7 @@ export const AccountPage = () => {
       {!isAccountSetup || !isAuth ? null : (
         <>
           <Container maxWidth="sm" style={{ marginTop: '5vh' }}>
-            <UserProfileView requestedEmail="user" />
+            <UserProfileView requestedEmail="user" type="user" />
           </Container>
         </>
       )}

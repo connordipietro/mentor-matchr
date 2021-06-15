@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
@@ -15,15 +15,19 @@ import {
   Chip,
   Container,
   Grid,
+  Menu,
+  MenuItem,
 } from '@material-ui/core/';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
+import { AccountCircle } from '@material-ui/icons';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import defaultAvatar from '../style/defaultavatar.png';
 import { getProfileInfo } from '../../utilities/api';
 import { LoadingSpinner } from '../style/loading-spinner';
+import EditProfileButton from './edit-profile-button';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -57,11 +61,12 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function UserProfileView({ requestedEmail }) {
+export default function UserProfileView({ requestedEmail, type }) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-  const [profileInfo, setProfileInfo] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
+  const [expanded, setExpanded] = useState(false);
+  const [profileInfo, setProfileInfo] = useState([]);
+  const [loading, setLoading] = useState(true);
+  console.log(type);
 
   useEffect(() => {
     const data = { email: requestedEmail };
@@ -75,6 +80,17 @@ export default function UserProfileView({ requestedEmail }) {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
   return (
     <>
@@ -94,11 +110,7 @@ export default function UserProfileView({ requestedEmail }) {
                 }
               />
             }
-            action={
-              <IconButton aria-label="settings">
-                <MoreVertIcon />
-              </IconButton>
-            }
+            action={type === 'user' ? <EditProfileButton /> : null}
             title={profileInfo.name}
             subheader={profileInfo.settings.mentorMentee.mentorMentee}
           />
@@ -165,4 +177,5 @@ export default function UserProfileView({ requestedEmail }) {
 
 UserProfileView.propTypes = {
   requestedEmail: PropTypes.string,
+  type: PropTypes.string,
 };
