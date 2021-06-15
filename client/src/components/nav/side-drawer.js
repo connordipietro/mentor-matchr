@@ -66,7 +66,6 @@ export default function TemporaryDrawer({ auth }) {
             { text: 'Home', icon: <HomeIcon /> },
             { text: 'Account', icon: <AccountCircle /> },
             { text: 'Matches', icon: <DoneAllIcon /> },
-            { text: 'Settings', icon: <SettingsIcon /> },
           ].map((item) => (
             <ListItem
               button

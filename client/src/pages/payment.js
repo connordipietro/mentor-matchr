@@ -2,7 +2,7 @@ import { Container } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getLoginStatus } from '../utilities/api';
-import { StripeForm } from '../components';
+import { LoadingSpinner, StripeForm } from '../components';
 
 export const PaymentPage = () => {
   const [loading, setLoading] = useState(true);
@@ -27,7 +27,7 @@ export const PaymentPage = () => {
       <StripeForm />
     </Container>
   ) : (
-    <h3>Loading...</h3>
+    <LoadingSpinner loading={loading} />
   );
 };
 

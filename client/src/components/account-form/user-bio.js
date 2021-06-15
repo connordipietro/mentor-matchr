@@ -9,7 +9,6 @@ export default function UserBio({ setBio }) {
 
   const handleBioChange = (evt) => {
     setUserBio(evt.target.value);
-    console.log(evt.target.value);
   };
 
   const classes = useStyles();

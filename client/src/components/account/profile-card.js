@@ -13,17 +13,11 @@ import {
   IconButton,
   Typography,
   Chip,
-  Container,
-  Grid,
-  Menu,
-  MenuItem,
 } from '@material-ui/core/';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
-import { AccountCircle } from '@material-ui/icons';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import defaultAvatar from '../style/defaultavatar.png';
 import { getProfileInfo } from '../../utilities/api';
 import { LoadingSpinner } from '../style/loading-spinner';
@@ -44,7 +38,7 @@ const useStyles = makeStyles(() => ({
     height: 0,
     paddingTop: '56.25%', // 16:9
   },
-  expand: {
+  rightIcon: {
     marginLeft: 'auto',
   },
   expandOpen: {
@@ -66,7 +60,6 @@ export default function UserProfileView({ requestedEmail, type }) {
   const [expanded, setExpanded] = useState(false);
   const [profileInfo, setProfileInfo] = useState([]);
   const [loading, setLoading] = useState(true);
-  console.log(type);
 
   useEffect(() => {
     const data = { email: requestedEmail };
@@ -146,29 +139,23 @@ export default function UserProfileView({ requestedEmail, type }) {
               ))}
             </div>
           </CardContent>
-          <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
-            </IconButton>
-            <IconButton aria-label="share">
-              <ShareIcon />
-            </IconButton>
-            <IconButton
-              className={clsx(classes.expand, {
-                [classes.expandOpen]: expanded,
-              })}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton>
-          </CardActions>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph>Method:</Typography>
-            </CardContent>
-          </Collapse>
+          {type === 'user' ? null : (
+            <CardActions disableSpacing>
+              <IconButton aria-label="add to favorites">
+                <FavoriteIcon />
+              </IconButton>
+              <IconButton aria-label="share">
+                <ShareIcon />
+              </IconButton>
+              <IconButton
+                className={classes.rightIcon}
+                onClick={handleExpandClick}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </IconButton>
+            </CardActions>
+          )}
         </Card>
       )}
     </>

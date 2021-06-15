@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
+import { PropTypes } from 'prop-types';
 import { useStyles } from './create-account-form-styles';
 import AvatarUpload from './avatar-upload';
 import ChipsHandler from './interest-chips/chip-handler';
@@ -16,7 +17,7 @@ import MentoMenteeRadioGroup from './mentor-mentee-radiogroup';
 import { createAccount } from '../../utilities/api';
 import UserBio from './user-bio';
 
-export default function CreateAccountForm() {
+export default function CreateAccountForm({ edit }) {
   const [mentorMentee, setMentorMentee] = useState({});
   const [daysState, setDaysState] = useState({});
   const [timeState, setTimeState] = useState({});
@@ -65,18 +66,20 @@ export default function CreateAccountForm() {
       userInterests: chips,
       userBio: bio,
     };
-    console.log(data);
     // Send to server
     createAccount(data).then(() => history.push('/account'));
   };
 
   const classes = useStyles();
+
   return (
     <div>
       <Container maxWidth="sm">
         <Paper className={classes.root}>
           <form onSubmit={handleSubmit}>
-            <Typography variant="h5">Let's set up your account</Typography>
+            <Typography variant="h5">
+              {edit ? 'Edit your account' : 'Set up your account'}
+            </Typography>
             <Typography variant="h6">Which are you?</Typography>
             <MentoMenteeRadioGroup setMentorMentee={setMentorMentee} />
             <Divider className={classes.divider} />
@@ -101,7 +104,7 @@ export default function CreateAccountForm() {
               color="primary"
               className={classes.button}
             >
-              Get Started
+              {edit ? 'Save Changes' : 'Get Started'}
             </Button>
           </form>
         </Paper>
@@ -109,3 +112,7 @@ export default function CreateAccountForm() {
     </div>
   );
 }
+
+CreateAccountForm.propTypes = {
+  edit: PropTypes.bool,
+};
