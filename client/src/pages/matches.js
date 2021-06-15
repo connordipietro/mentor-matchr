@@ -1,3 +1,4 @@
+import { Container } from '@material-ui/core';
 import MatchesView from '../components/matches/matches-view';
 import useIsAccountSetup from '../utilities/accountSetupHook';
 import useAuthCheck from '../utilities/authCheckHook';
@@ -8,12 +9,11 @@ export const MatchesPage = () => {
 
   return (
     <>
-      {!isAccountSetup || !isAuth ? (
-        <h1>Redirecting</h1>
-      ) : (
+      {!isAccountSetup || !isAuth ? null : (
         <>
-          <h1>Matches Page</h1>
-          <MatchesView />
+          <Container maxWidth="lg" style={{ marginTop: '5vh' }}>
+            <MatchesView />
+          </Container>
         </>
       )}
       <div />

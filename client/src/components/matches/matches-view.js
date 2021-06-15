@@ -1,15 +1,13 @@
-import { Container } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { getMatches } from '../../utilities/api';
 import UserProfileView from '../account/profile-card';
-import { LoadingSpinner } from '../style/loading-spinner';
 
 export default function MatchesView() {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('using effect');
     getMatches()
       .then((res) => {
         setMatches(res.data.matches);
@@ -19,14 +17,13 @@ export default function MatchesView() {
   }, []);
 
   const renderMatches = () => {
-    console.log(matches);
     const allMatches = matches.map((match) => (
-      <UserProfileView requestedEmail={match.email} key={match.email} />
+      <Grid item xs={6} key={match.email}>
+        <UserProfileView requestedEmail={match.email} />
+      </Grid>
     ));
-    return allMatches;
+    return <Grid container>{allMatches}</Grid>;
   };
 
-  return (
-    <>{loading ? <LoadingSpinner loading={loading} /> : renderMatches()}</>
-  );
+  return <>{loading ? null : renderMatches()}</>;
 }

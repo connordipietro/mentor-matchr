@@ -12,9 +12,9 @@ import {
   Avatar,
   IconButton,
   Typography,
-  Paper,
   Chip,
   Container,
+  Grid,
 } from '@material-ui/core/';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -25,10 +25,16 @@ import defaultAvatar from '../style/defaultavatar.png';
 import { getProfileInfo } from '../../utilities/api';
 import { LoadingSpinner } from '../style/loading-spinner';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     maxWidth: '50vw',
     margin: 10,
+    palette: {
+      primary: {
+        main: '#1e88e5',
+      },
+      secondary: 'orange',
+    },
   },
   media: {
     height: 0,
@@ -45,11 +51,9 @@ const useStyles = makeStyles((theme) => ({
   },
   chips: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'left',
     flexWrap: 'wrap',
     listStyle: 'none',
-    padding: 5,
-    minHeight: '7vh',
   },
 }));
 
@@ -99,55 +103,36 @@ export default function UserProfileView({ requestedEmail }) {
             subheader={profileInfo.settings.mentorMentee.mentorMentee}
           />
           <CardContent>
-            <Typography variant="body2" color="textPrimary" component="p">
-              Bio:
-            </Typography>
             <Typography variant="body1" color="textSecondary" component="p">
               {profileInfo.settings.bio}
             </Typography>
             <br />
-            <Typography variant="body2" color="textPrimary" component="p">
-              I can usually meet on:
+            <Typography variant="subtitle1" color="textPrimary" component="p">
+              I'm usually availible:
             </Typography>
-            {_.keys(_.pickBy(profileInfo.settings.days)).map((day) => (
-              <Typography
-                variant="body1"
-                color="textSecondary"
-                component="p"
-                key={day}
-              >
-                {day}
-              </Typography>
-            ))}
+            <Typography variant="body1" color="textSecondary" component="p">
+              {_.keys(_.pickBy(profileInfo.settings.days)).join(`, `)}
+            </Typography>
             <br />
-            <Typography variant="body2" color="textPrimary" component="p">
-              I prefer the:
+            <Typography variant="subtitle1" color="textPrimary" component="p">
+              I prefer:
             </Typography>
-            {_.keys(_.pickBy(profileInfo.settings.time)).map((time) => (
-              <Typography
-                variant="body1"
-                color="textSecondary"
-                component="p"
-                key={time}
-              >
-                {time}
-              </Typography>
-            ))}
+            <Typography variant="body1" color="textSecondary" component="p">
+              {_.keys(_.pickBy(profileInfo.settings.time)).join(`, `)}
+            </Typography>
             <br />
-            <Typography variant="body2" color="textPrimary" component="p">
-              Interests:
-            </Typography>
-            <Container component="ul" className={classes.chips}>
+            <div className={classes.chips}>
               {profileInfo.settings.interests.map((data) => (
                 <li key={data.key}>
                   <Chip
                     label={data.label}
                     variant="default"
+                    size="small"
                     style={{ margin: '2px' }}
                   />
                 </li>
               ))}
-            </Container>
+            </div>
           </CardContent>
           <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">
