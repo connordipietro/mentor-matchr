@@ -9,6 +9,7 @@ import {
   IconButton,
 } from '@material-ui/core/';
 import SendIcon from '@material-ui/icons/Send';
+import ChatContainer from '../socket/chat-container';
 
 const useStyles = makeStyles((theme) => ({
   expand: {
@@ -51,6 +52,7 @@ export default function ProfileCardChat() {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Chat</Typography>
+          <ChatContainer />
         </CardContent>
       </Collapse>
     </>

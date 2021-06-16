@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import _ from 'lodash';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Card,
@@ -10,11 +9,7 @@ import {
   Avatar,
   Typography,
   Chip,
-  Collapse,
-  CardActions,
-  IconButton,
 } from '@material-ui/core/';
-import SendIcon from '@material-ui/icons/Send';
 import defaultAvatar from '../style/defaultavatar.png';
 import { getProfileInfo } from '../../utilities/api';
 import { LoadingSpinner } from '../style/loading-spinner';
@@ -24,7 +19,7 @@ import ProfileCardChat from './profile-card-chat';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: '50vw',
+    maxWidth: '75vw',
     margin: 10,
     palette: {
       primary: {
@@ -65,11 +60,6 @@ export default function UserProfileView({ requestedEmail, type }) {
   const classes = useStyles();
   const [profileInfo, setProfileInfo] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [expanded, setExpanded] = useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   useEffect(() => {
     const data = { email: requestedEmail };

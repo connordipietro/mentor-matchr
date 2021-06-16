@@ -20,6 +20,7 @@ const prod = {
     ABOUT: '',
     CONTACT: '',
     DONATE: '',
+    PORT: process.env.PORT,
     API_CREATE_USER: `https://mentor-matchr.herokuapp.com/api/user/account/create`,
   },
 };
@@ -46,6 +47,7 @@ const dev = {
     ABOUT: '',
     CONTACT: '',
     DONATE: '',
+    PORT: 'http://127.0.0.1:5000',
     API_CREATE_USER: `http://localhost:5000/api/user/account/create`,
   },
 };

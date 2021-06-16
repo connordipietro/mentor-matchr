@@ -13,9 +13,6 @@ const mongoose = require('mongoose');
 const http = require('http');
 
 // Imports socket.io
-const io = require('socket.io')(http);
-
-const STATIC_CHANNELS = ['global_notifications', 'global_chat'];
 
 // Imports middleware
 const { urlencoded } = require('express');
@@ -24,9 +21,6 @@ const cors = require('cors');
 
 // Imports deployment necesities
 const path = require('path');
-
-// Imports routers
-const routes = require('./routes/index');
 
 // Establishes mongoose
 mongoose
@@ -37,7 +31,18 @@ mongoose
   .then(() => console.log('connected to db'))
   .catch((err) => console.log(`error connecting to db ${err}`));
 
+// Initiated express
 const app = express();
+
+// Server set up
+const server = http.createServer(app);
+
+// SocketIO set up
+const io = require('socket.io')(server, {
+  cors: {
+    origin: '*',
+  },
+});
 
 // Registers body parsing middleware
 app.use(express.json({ limit: '10mb' }));
@@ -71,6 +76,8 @@ app.use(
 );
 
 // Imports router
+const routes = require('./routes/index');
+
 app.use('/api', routes);
 
 if (process.env.NODE_ENV === 'production') {
@@ -82,9 +89,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve('client', 'build', 'index.html'));
   });
 }
-
-// Server set up
-const server = http.createServer(app);
 
 const { PORT } = process.env;
 

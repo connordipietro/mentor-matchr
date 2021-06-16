@@ -11,7 +11,14 @@ export const ConnectionsPage = () => {
     <>
       {!isAccountSetup || !isAuth ? null : (
         <>
-          <Container maxWidth="lg" style={{ marginTop: '5vh' }}>
+          <Container
+            maxWidth="lg"
+            style={{
+              marginTop: '5vh',
+              justifyContent: 'center',
+              display: 'flex',
+            }}
+          >
             <AcceptedMatchesView />
           </Container>
         </>
