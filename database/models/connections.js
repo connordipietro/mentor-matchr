@@ -15,6 +15,10 @@ const ConnectionsSchema = new Schema({
     type: String,
     required: false,
   },
+  chatLog: {
+    type: Array,
+    required: false,
+  },
 });
 
 module.exports = mongoose.model('Connections', ConnectionsSchema);

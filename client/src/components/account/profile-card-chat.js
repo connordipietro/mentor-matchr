@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import clsx from 'clsx';
+import { PropTypes } from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   CardContent,
@@ -9,7 +10,7 @@ import {
   IconButton,
 } from '@material-ui/core/';
 import SendIcon from '@material-ui/icons/Send';
-import ChatContainer from '../socket/chat-container';
+import Room from '../chat/room';
 
 const useStyles = makeStyles((theme) => ({
   expand: {
@@ -27,10 +28,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProfileCardChat() {
+export default function ProfileCardChat({
+  recipientEmail,
+  senderEmail,
+  matchId,
+}) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
-
+  console.log(matchId);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -51,10 +56,19 @@ export default function ProfileCardChat() {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Chat</Typography>
-          <ChatContainer />
+          <Room
+            recipientEmail={recipientEmail}
+            senderEmail={senderEmail}
+            matchId={matchId}
+          />
         </CardContent>
       </Collapse>
     </>
   );
 }
+
+ProfileCardChat.propTypes = {
+  recipientEmail: PropTypes.string,
+  senderEmail: PropTypes.string,
+  matchId: PropTypes.string,
+};

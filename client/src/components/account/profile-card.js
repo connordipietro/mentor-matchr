@@ -19,7 +19,7 @@ import ProfileCardChat from './profile-card-chat';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: '75vw',
+    maxWidth: '90vw',
     margin: 10,
     palette: {
       primary: {
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UserProfileView({ requestedEmail, type }) {
+export default function UserProfileView({ requestedEmail, type, matchId }) {
   const classes = useStyles();
   const [profileInfo, setProfileInfo] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -131,7 +131,13 @@ export default function UserProfileView({ requestedEmail, type }) {
               ))}
             </div>
           </CardContent>
-          {type === 'accepted' ? <ProfileCardChat /> : null}
+          {type === 'accepted' ? (
+            <ProfileCardChat
+              recipientEmail={requestedEmail}
+              senderEmail={profileInfo.currentUser}
+              matchId={matchId}
+            />
+          ) : null}
         </Card>
       )}
     </>
@@ -141,4 +147,5 @@ export default function UserProfileView({ requestedEmail, type }) {
 UserProfileView.propTypes = {
   requestedEmail: PropTypes.string,
   type: PropTypes.string,
+  matchId: PropTypes.string,
 };

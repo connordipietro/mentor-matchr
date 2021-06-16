@@ -12,6 +12,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const http = require('http');
 
+const util = require('util');
+
 // Imports socket.io
 
 // Imports middleware
@@ -96,10 +98,52 @@ server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
 
-io.on('connection', (socket) => {
-  /* socket object may be used to send specific messages to the new connected client */
-  console.log('new client connected');
-  socket.emit('connection', null);
+const STATIC_CHANNELS = [
+  {
+    name: 'Global chat',
+    participants: 0,
+    id: 1,
+    sockets: [],
+  },
+  {
+    name: 'Funny',
+    participants: 0,
+    id: 2,
+    sockets: [],
+  },
+];
+
+const NEW_MESSAGE_EVENT = 'new-message-event';
+
+// Todo. Make room be the db id of the connection
+// save msg to db on socket event
+// Create route to send old messages to front end
+
+io.on('connection', async (socket) => {
+  let room;
+  // Creates a socket room with the match id of the current matched users
+  await socket.on('matchId', async function (matchId) {
+    room = matchId;
+    socket.join(room);
+    console.log(socket);
+  });
+
+  socket.on(NEW_MESSAGE_EVENT, (data) => {
+    console.log(data);
+
+    io.in(room).emit(NEW_MESSAGE_EVENT, data);
+  });
+
+  socket.on('disconnect', () => {
+    socket.leave(room);
+  });
+});
+
+// Pull into own routes files
+app.get('/getChannels', (req, res) => {
+  res.json({
+    channels: STATIC_CHANNELS,
+  });
 });
 /* 
 

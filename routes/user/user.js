@@ -46,6 +46,7 @@ router.post('/profile', async (req, res) => {
       email: profileInfo[0].email,
       settings: profileInfo[0].settings,
       name: profileInfo[0].name,
+      currentUser: req.user.email,
     });
   }
   return res.sendStatus(401);

@@ -117,14 +117,23 @@ router.post('/get/accepted', async (req, res) => {
       const initiatedMatches = checkIfCurrentUserInitiated.map(
         (match) => match.recipient
       );
+      const initiatedMatchIds = checkIfCurrentUserInitiated.map(
+        (match) => match._id
+      );
+      console.log(initiatedMatchIds);
       results.initiated = initiatedMatches;
+      results.acceptedIds = initiatedMatchIds;
     }
 
     if (checkIfOtherUserInitiated) {
       const acceptedMatches = checkIfOtherUserInitiated.map(
         (match) => match.sender
       );
+      const acceptedMatchIds = checkIfOtherUserInitiated.map(
+        (match) => match._id
+      );
       results.accepted = acceptedMatches;
+      results.initiatedIds = acceptedMatchIds;
     }
     console.log(results);
     return res.send({ status: 200, connections: results });
