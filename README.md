@@ -1,6 +1,6 @@
 # Mentor Matcher
 
-This tool is designed to encourage software membership.
+This tool is designed to encourage software mentorship.
 
 ## Concepts Introduced
 
