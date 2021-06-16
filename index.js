@@ -12,6 +12,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const http = require('http');
 
+// Imports socket.io
+const io = require('socket.io')(http);
+
+const STATIC_CHANNELS = ['global_notifications', 'global_chat'];
+
 // Imports middleware
 const { urlencoded } = require('express');
 const passport = require('passport');
@@ -78,16 +83,6 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-/* app.get('/', (req, res) => {
-  if (req.session.authenticated) {
-    // User is authenticated
-    res.send({ status: 200, session: req.session, id: req.sessionID });
-  } else {
-    // User has not been authenticated
-    res.send({ status: 200, session: req.session, id: req.sessionID });
-  }
-}); */
-
 // Server set up
 const server = http.createServer(app);
 
@@ -96,3 +91,20 @@ const { PORT } = process.env;
 server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
+
+io.on('connection', (socket) => {
+  /* socket object may be used to send specific messages to the new connected client */
+  console.log('new client connected');
+  socket.emit('connection', null);
+});
+/* 
+
+app.get('/', (req, res) => {
+  if (req.session.authenticated) {
+    // User is authenticated
+    res.send({ status: 200, session: req.session, id: req.sessionID });
+  } else {
+    // User has not been authenticated
+    res.send({ status: 200, session: req.session, id: req.sessionID });
+  }
+}); */

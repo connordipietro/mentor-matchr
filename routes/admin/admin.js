@@ -3,7 +3,7 @@ const Banner = require('../../database/models/banner');
 
 // /api/admin/dashboard
 router.get('/dashboard', (req, res) => {
-  // For testing the admin dashboard, change this line to your gmail
+  // For testing the admin dashboard, change env var to your account email
   if (req.user.email === process.env.ADMIN_USER) {
     res.sendStatus(200);
   } else {
@@ -23,7 +23,7 @@ module.exports = router;
 
 router.post('/banner', async (req, res) => {
   const { expireTime, bannerMsg } = req.body;
-  // Unrptoected route for testing, would need to verfiy admin eventually
+  // Unrptoected route for testing, would need to verfiy admin
   const result = await Banner.create({
     expirationDate: expireTime,
     bannerMsg,
@@ -34,57 +34,3 @@ router.post('/banner', async (req, res) => {
   // Send error on error
   res.sendStatus(404);
 });
-
-/* 
-
- const expires = Date.now() + exp time in ms;
-
-
-
-        const bannerInDB = await Banner.find();
-        if (!bannerInDB) {
-          console.log('Banner not found');
-          const stripeCustomer = await createCustomer({ email });
-          const newUser = await User.create({
-            email,
-            id: sub,
-            customer: {
-              stripeId: stripeCustomer.id,
-            },
-          });
-          return done(null, newUser);
-        }
-        console.log('Found user');
-        return done(null, userInDB);
-      } catch (err) {
-        return done(err, null);
-      }
-    }
-  )
-);
-
-
-
-
-const bannerInDB = await Banner.find();
-        if (!bannerInDB) {
-          console.log('Banner not found');
-          const stripeCustomer = await createCustomer({ email });
-          const newUser = await User.create({
-            email,
-            id: sub,
-            customer: {
-              stripeId: stripeCustomer.id,
-            },
-          });
-          return done(null, newUser);
-        }
-        console.log('Found user');
-        return done(null, userInDB);
-      } catch (err) {
-        return done(err, null);
-      }
-    }
-  )
-);
- */

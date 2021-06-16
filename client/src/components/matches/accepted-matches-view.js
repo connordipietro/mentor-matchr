@@ -33,7 +33,7 @@ export default function MatchesView() {
   const renderMatches = () => {
     const allMatches = matches.map((match) => (
       <Grid item xs={6} key={match}>
-        <UserProfileView requestedEmail={match} />
+        <UserProfileView requestedEmail={match} type="accepted" />
       </Grid>
     ));
     return <Grid container>{allMatches}</Grid>;

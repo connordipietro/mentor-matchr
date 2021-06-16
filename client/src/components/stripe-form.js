@@ -34,15 +34,12 @@ export const StripeForm = () => {
         } else {
           setError(null);
           // Send paymentMethod.id to server
-          console.log(result);
           setPaymentMethod({ id: result.paymentMethod.id });
         }
       })
       .then(function (result) {
         // Handle server response
-        console.log(result);
       });
-    console.log(payload);
   };
 
   const handleChange = (event) => {

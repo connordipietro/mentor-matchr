@@ -3,15 +3,15 @@ import { TextField } from '@material-ui/core';
 import { postBanner, checkIfBanner } from '../../utilities/api';
 
 export const CreateBanner = () => {
-  const [error, setError] = useState();
   const [hasBennerBeenChecked, setHasBannerBeenChecked] = useState(false);
   const [bannerData, setBannerData] = useState();
   const [time, setTime] = useState();
 
+  const [error, setError] = useState();
+
   useEffect(() => {
     checkIfBanner()
       .then(({ data }) => {
-        console.log(data);
         setBannerData({
           bannerMsg: data.bannerMsg,
           expireTime: data.expirationDate,
@@ -27,7 +27,6 @@ export const CreateBanner = () => {
     event.preventDefault();
     console.log(event.target);
 
-    // hard coded testing values
     const bannerMsg = event.target[0].value;
 
     // Return if text field empty
@@ -36,16 +35,12 @@ export const CreateBanner = () => {
       return;
     }
 
-    const payload = await postBanner({ bannerMsg, expireTime: time }).then(
-      function (result) {
-        if (result) {
-          setError(null);
-          console.log(result);
-          setHasBannerBeenChecked(false);
-        }
+    await postBanner({ bannerMsg, expireTime: time }).then(function (result) {
+      if (result) {
+        setError(null);
+        setHasBannerBeenChecked(false);
       }
-    );
-    console.log(payload);
+    });
   };
 
   return (

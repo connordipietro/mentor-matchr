@@ -10,6 +10,7 @@ export default function MatchesView() {
   useEffect(() => {
     getMatches()
       .then((res) => {
+        console.log(res);
         setMatches(res.data.matches);
         setLoading(false);
       })

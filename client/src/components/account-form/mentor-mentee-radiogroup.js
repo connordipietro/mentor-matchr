@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { PropTypes } from 'prop-types';
 import '../../pages/pages.css';
 import {
   FormControl,
@@ -5,8 +7,6 @@ import {
   Radio,
   RadioGroup,
 } from '@material-ui/core';
-import { useEffect, useState } from 'react';
-import { PropTypes } from 'prop-types';
 import { useStyles } from './create-account-form-styles';
 
 export default function MentoMenteeRadioGroup({ setMentorMentee }) {

@@ -1,8 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 const user = require('../database/models/user');
 
-// Series of aync filters
-
+// Series of aync filters...
 // If mentor makes request, mentees are returned, and vice versa
 const mentorMenteeFilter = async (matches, mentorMentee) => {
   const filterByMentorMentee = matches.filter(

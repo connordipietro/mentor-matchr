@@ -47,20 +47,6 @@ const SettingsSchema = new Schema({
     required: true,
   },
 });
-const ConnectionsSchema = new Schema({
-  sender: {
-    type: String,
-    required: false,
-  },
-  recipient: {
-    type: String,
-    required: false,
-  },
-  status: {
-    type: String,
-    required: false,
-  },
-});
 
 const UserSchema = new Schema({
   email: {

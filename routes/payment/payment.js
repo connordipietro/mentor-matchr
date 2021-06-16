@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
     message: 'test',
   });
 });
-
+// /api/payment/methods/create
 router.post('/methods/create', async (req, res) => {
   console.log(req.user);
   if (req.user) {

@@ -2,12 +2,11 @@ const router = require('express').Router();
 
 const Connections = require('../../database/models/connections');
 
-// /api/user/connections/
+// /api/user/connections/update
 router.post('/update', async (req, res) => {
   if (req.user) {
     const { id } = req.user;
     if (!id) return res.sendStatus(400);
-    console.log('post route hit');
 
     // Check if user pair already exists, initiated by user
     const checkIfCurrentUserInitiated = await Connections.findOne({
@@ -38,7 +37,7 @@ router.post('/update', async (req, res) => {
       const { status } = checkIfOtherUserInitiated;
       if (status === 'initiated') {
         const update = await Connections.findOneAndUpdate(
-          { sender: req.body.email },
+          { sender: req.body.email, recipient: req.user.email },
           {
             $set: {
               status: 'accepted',
@@ -48,6 +47,7 @@ router.post('/update', async (req, res) => {
             new: true,
           }
         );
+        console.log(update);
         return res.send({ status: 200, connections: update });
       }
 
@@ -57,6 +57,7 @@ router.post('/update', async (req, res) => {
   }
 });
 
+// /api/user/connections/get
 router.post('/get', async (req, res) => {
   if (req.user) {
     const { id } = req.user;
@@ -92,6 +93,7 @@ router.post('/get', async (req, res) => {
   return res.sendStatus(401);
 });
 
+// /api/user/connections/get/accepted
 router.post('/get/accepted', async (req, res) => {
   if (req.user) {
     const { id } = req.user;

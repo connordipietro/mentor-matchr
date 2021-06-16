@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Card,
   CardHeader,
@@ -9,15 +10,19 @@ import {
   Avatar,
   Typography,
   Chip,
+  Collapse,
+  CardActions,
+  IconButton,
 } from '@material-ui/core/';
-import { red } from '@material-ui/core/colors';
+import SendIcon from '@material-ui/icons/Send';
 import defaultAvatar from '../style/defaultavatar.png';
 import { getProfileInfo } from '../../utilities/api';
 import { LoadingSpinner } from '../style/loading-spinner';
 import EditProfileButton from './edit-profile-button';
 import ConnectButton from './connect-button';
+import ProfileCardChat from './profile-card-chat';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: '50vw',
     margin: 10,
@@ -35,11 +40,18 @@ const useStyles = makeStyles(() => ({
   rightIcon: {
     marginLeft: 'auto',
   },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
   expandOpen: {
     transform: 'rotate(180deg)',
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: 'grey',
   },
   chips: {
     display: 'flex',
@@ -53,6 +65,11 @@ export default function UserProfileView({ requestedEmail, type }) {
   const classes = useStyles();
   const [profileInfo, setProfileInfo] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [expanded, setExpanded] = useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   useEffect(() => {
     const data = { email: requestedEmail };
@@ -124,6 +141,7 @@ export default function UserProfileView({ requestedEmail, type }) {
               ))}
             </div>
           </CardContent>
+          {type === 'accepted' ? <ProfileCardChat /> : null}
         </Card>
       )}
     </>

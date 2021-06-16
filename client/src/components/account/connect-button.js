@@ -1,6 +1,6 @@
+import { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { Button } from '@material-ui/core';
-import { useState, useEffect } from 'react';
 import { postConnections, getConnections } from '../../utilities/api';
 
 export default function ConnectButton({ requestedEmail }) {

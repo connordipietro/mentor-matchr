@@ -10,16 +10,13 @@ router.get('/status', async (req, res) => {
       return res.send({ status: 200, accountSetUp: true });
     }
     // User hasn't created account
-    console.log('user hasnt created account');
     return res.send({ status: 200, accountSetUp: false });
   }
   res.sendStatus(401);
 });
 
 // /api/auth/google
-router.get('/google', passport.authenticate('google'), () => {
-  console.log('test');
-});
+router.get('/google', passport.authenticate('google'), () => {});
 
 // /api/auth/google/redirect
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
@@ -29,6 +26,7 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
   res.redirect(process.env.EXISTING_USER);
 });
 
+// /api/auth/google/logout
 router.get('/google/logout', (req, res) => {
   req.session.destroy(() => {
     req.logout();

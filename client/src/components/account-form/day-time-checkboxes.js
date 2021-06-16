@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { PropTypes } from 'prop-types';
 import '../../pages/pages.css';
 import {
   Checkbox,
@@ -7,8 +9,6 @@ import {
   FormGroup,
   Typography,
 } from '@material-ui/core';
-import { PropTypes } from 'prop-types';
-import { useEffect, useState } from 'react';
 import { useStyles } from './create-account-form-styles';
 
 export default function DayTimeCheckBoxes({ setDaysState, setTimeState }) {

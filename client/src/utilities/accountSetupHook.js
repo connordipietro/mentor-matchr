@@ -14,7 +14,7 @@ export default function useIsAccountSetup() {
         if (isMounted && res.data.accountSetUp) setIsSetUp(true);
       })
       .catch((err) => {
-        console.log(err);
+        /* console.log(err); */
       });
     return () => (isMounted = false);
   }, [history]);

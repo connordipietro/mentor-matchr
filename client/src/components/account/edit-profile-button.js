@@ -1,11 +1,8 @@
-import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router';
+import { Button } from '@material-ui/core';
 
 export default function EditProfileButton() {
   const history = useHistory();
-  const handleClick = () => {
-    history.push('/edit-account');
-  };
 
   return (
     <>
@@ -13,7 +10,7 @@ export default function EditProfileButton() {
         variant="outlined"
         color="secondary"
         size="small"
-        onClick={() => handleClick()}
+        onClick={() => history.push('/edit-account')}
       >
         Edit
       </Button>

@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react';
+import { PropTypes } from 'prop-types';
 import ImageUploading from 'react-images-uploading';
 import '../style/components-style.css';
-import { PropTypes } from 'prop-types';
 import BackupIcon from '@material-ui/icons/Backup';
 
 export default function AvatarUpload({ setAvatar }) {
@@ -62,7 +62,7 @@ export default function AvatarUpload({ setAvatar }) {
               <div>
                 {errors.maxFileSize && <span>Max image file size is 5mb.</span>}
                 {errors.acceptType && (
-                  <span>Only jpg, gif, and png are allowed.</span>
+                  <span>Only jpg, jpeg, gif, and png are allowed.</span>
                 )}
               </div>
             )}

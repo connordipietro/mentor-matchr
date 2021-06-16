@@ -10,12 +10,10 @@ export const PaymentPage = () => {
 
   useEffect(() => {
     getLoginStatus()
-      .then(({ data }) => {
-        console.log(data);
+      .then(() => {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
         history.push('/login');
         setLoading(false);
       });

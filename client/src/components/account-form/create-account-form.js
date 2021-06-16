@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { useHistory } from 'react-router';
+import { PropTypes } from 'prop-types';
 import '../../pages/pages.css';
 import {
   Button,
@@ -6,16 +9,13 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core';
-import { useState } from 'react';
-import { useHistory } from 'react-router';
-import { PropTypes } from 'prop-types';
 import { useStyles } from './create-account-form-styles';
 import AvatarUpload from './avatar-upload';
 import ChipsHandler from './interest-chips/chip-handler';
 import DayTimeCheckBoxes from './day-time-checkboxes';
 import MentoMenteeRadioGroup from './mentor-mentee-radiogroup';
-import { createAccount } from '../../utilities/api';
 import UserBio from './user-bio';
+import { createAccount } from '../../utilities/api';
 
 export default function CreateAccountForm({ edit }) {
   const [mentorMentee, setMentorMentee] = useState({});
@@ -73,7 +73,7 @@ export default function CreateAccountForm({ edit }) {
   const classes = useStyles();
 
   return (
-    <div>
+    <>
       <Container maxWidth="sm">
         <Paper className={classes.root}>
           <form onSubmit={handleSubmit}>
@@ -109,7 +109,7 @@ export default function CreateAccountForm({ edit }) {
           </form>
         </Paper>
       </Container>
-    </div>
+    </>
   );
 }
 

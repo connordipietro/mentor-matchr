@@ -12,19 +12,17 @@ export const ProductsPage = () => {
 
   const handleYearlySubClick = async () => {
     setLoading(true);
-    const { data } = await newSubscription({
+    await newSubscription({
       priceId: stripePriceId.perYear,
     });
     setLoading(false);
-    console.log(data);
   };
   const handleMonthlySubClick = async () => {
     setLoading(true);
-    const { data } = await newSubscription({
+    await newSubscription({
       priceId: stripePriceId.perMonth,
     });
     setLoading(false);
-    console.log(data);
   };
 
   return (

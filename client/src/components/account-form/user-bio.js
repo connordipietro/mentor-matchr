@@ -1,7 +1,7 @@
+import { useEffect, useState } from 'react';
+import { PropTypes } from 'prop-types';
 import '../../pages/pages.css';
 import { FormControl, FormGroup, TextField } from '@material-ui/core';
-import { PropTypes } from 'prop-types';
-import { useEffect, useState } from 'react';
 import { useStyles } from './create-account-form-styles';
 
 export default function UserBio({ setBio }) {
@@ -18,7 +18,7 @@ export default function UserBio({ setBio }) {
   }, [setBio, userBio]);
 
   return (
-    <div>
+    <>
       <FormControl
         required
         component="fieldset"
@@ -36,7 +36,7 @@ export default function UserBio({ setBio }) {
           />
         </FormGroup>
       </FormControl>
-    </div>
+    </>
   );
 }
 

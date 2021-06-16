@@ -1,12 +1,8 @@
-import { makeStyles } from '@material-ui/core/styles';
-import Chip from '@material-ui/core/Chip';
-import Paper from '@material-ui/core/Paper';
-import TagFacesIcon from '@material-ui/icons/TagFaces';
 import { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
-import { Typography } from '@material-ui/core';
-
-window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
+import { Typography, Chip, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import TagFacesIcon from '@material-ui/icons/TagFaces';
 
 const useStyles = makeStyles((theme) => ({
   root: {
