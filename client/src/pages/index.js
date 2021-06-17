@@ -6,3 +6,4 @@ export { HomePage } from './home';
 export { AccountPage } from './account';
 export { MatchesPage } from './matches';
 export { SettingsPage } from './settings';
+export { PairProgramming } from './pair-program';

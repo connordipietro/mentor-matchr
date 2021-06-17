@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import clsx from 'clsx';
 import { PropTypes } from 'prop-types';
+import { useHistory } from 'react-router';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   CardContent,
   Collapse,
   CardActions,
   IconButton,
+  Button,
 } from '@material-ui/core/';
 import SendIcon from '@material-ui/icons/Send';
 import Room from '../chat/room';
@@ -25,6 +27,11 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: 'grey',
   },
+  buttonLeft: {
+    marginLeft: '0.5em',
+    backgroundColor: 'steelblue',
+    color: 'white',
+  },
 }));
 
 export default function ProfileCardChat({
@@ -37,10 +44,27 @@ export default function ProfileCardChat({
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  const history = useHistory();
+
+  const handleCollabClick = () => {
+    console.log('click');
+    history.push({
+      pathname: `/pair-programming/${matchId}`,
+      state: { senderEmail, recipientEmail, matchId },
+    });
+  };
 
   return (
     <>
       <CardActions disableSpacing>
+        <Button
+          size="small"
+          variant="contained"
+          className={classes.buttonLeft}
+          onClick={(e) => handleCollabClick(e)}
+        >
+          Pair Program
+        </Button>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,

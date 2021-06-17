@@ -10,6 +10,7 @@ import {
   AccountPage,
   MatchesPage,
   SettingsPage,
+  PairProgramming,
 } from './pages';
 import { CreateAccountPage } from './pages/create-account';
 import { EditAccountPage } from './pages/edit-account';
@@ -43,6 +44,7 @@ function App() {
           <Route exact path="/create-account" component={CreateAccountPage} />
           <Route exact path="/edit-account" component={EditAccountPage} />
           <Route exact path="/connections" component={ConnectionsPage} />
+          <Route path="/pair-programming/:id" component={PairProgramming} />
         </Switch>
       </Router>
     </>

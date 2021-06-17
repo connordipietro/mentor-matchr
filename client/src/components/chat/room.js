@@ -43,9 +43,9 @@ const useStyles = makeStyles({
   message: {
     listStyle: 'none',
   },
-  owner: {
+  guest: {
     margin: '1em',
-    backgroundColor: '#0091EA',
+    backgroundColor: 'grey',
     padding: '0.5em 1.5em',
     borderRadius: '20px',
     color: '#FFF',
@@ -54,9 +54,9 @@ const useStyles = makeStyles({
     width: 'fit-content',
     marginRight: 'auto',
   },
-  guest: {
+  owner: {
     margin: '2em',
-    backgroundColor: '#8BC34A',
+    backgroundColor: '#0091EA',
     padding: '0.5em 1.5em',
     borderRadius: '20px',
     color: '#FFF',
