@@ -4,7 +4,6 @@ import { PropTypes } from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   CardContent,
-  Typography,
   Collapse,
   CardActions,
   IconButton,
@@ -35,7 +34,6 @@ export default function ProfileCardChat({
 }) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
-  console.log(matchId);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };

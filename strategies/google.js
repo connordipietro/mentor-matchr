@@ -30,6 +30,14 @@ passport.use(
       console.log(profile._json);
       try {
         const userInDB = await User.findOne({ id: sub });
+        if (userInDB) {
+          await User.findOneAndUpdate(
+            { id: sub },
+            { $push: { lastLogIn: Date.now() } },
+            { new: true }
+          );
+        }
+
         if (!userInDB) {
           console.log('User not found');
           const stripeCustomer = await createCustomer({ email });
@@ -44,6 +52,7 @@ passport.use(
           return done(null, newUser);
         }
         console.log('Found user');
+
         return done(null, userInDB);
       } catch (err) {
         return done(err, null);

@@ -46,7 +46,8 @@ export const getConnections = async (data) =>
 export const getAcceptedConnections = async (data) =>
   axios.post(config.url.API_GET_ACCEPTED_CONNECTIONS, data, credentials);
 
-export const loadChannels = async () => axios.get(config.url.API_GET_CHANNELS);
+export const getChatLog = async (data) =>
+  axios.post(config.url.API_GET_CHAT_LOG, data, credentials);
 
 // Auth status check for redux store
 export const GET_AUTH_STATUS = 'GET_AUTH_STATUS';

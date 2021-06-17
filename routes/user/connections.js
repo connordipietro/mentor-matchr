@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 const Connections = require('../../database/models/connections');
+const User = require('../../database/models/user');
 
 // /api/user/connections/update
 router.post('/update', async (req, res) => {
@@ -143,3 +144,31 @@ router.post('/get/accepted', async (req, res) => {
 });
 
 module.exports = router;
+
+// /api/user/connections/get/chat-log
+// Find the user chat log from db and sends to client to populate chat
+router.post('/get/chat-log', async (req, res) => {
+  if (req.user) {
+    const { id } = req.user;
+
+    if (!id) return res.sendStatus(400);
+    const { matchId } = req.body;
+
+    const findChatLog = await Connections.findOne({ _id: matchId });
+    const findLastLogIn = await User.findOne({ email: req.user.email });
+
+    let time;
+    if (findLastLogIn) {
+      const lastLogInTime = findLastLogIn.lastLogIn;
+      time = lastLogInTime[lastLogInTime.length - 1];
+    }
+
+    const { chatLog } = findChatLog;
+
+    // Last log in time will not exists for new users
+    if (time) return res.send({ status: 200, chatLog, time });
+
+    return res.send({ status: 200, chatLog });
+  }
+  return res.sendStatus(401);
+});

@@ -35,7 +35,7 @@ const useStyles = makeStyles({
   },
   messageContainer: {
     overflowY: 'auto',
-    height: '85%',
+    height: '80%',
   },
   divider: {
     margin: '0.1em',
@@ -55,7 +55,7 @@ const useStyles = makeStyles({
     marginRight: 'auto',
   },
   guest: {
-    margin: '1em',
+    margin: '2em',
     backgroundColor: '#8BC34A',
     padding: '0.5em 1.5em',
     borderRadius: '20px',
@@ -71,7 +71,7 @@ const useStyles = makeStyles({
 });
 
 const Room = ({ recipientEmail, senderEmail, matchId }) => {
-  const { messages, sendMessage } = useChatRoom(matchId);
+  const { messages, sendMessage } = useChatRoom(matchId, senderEmail);
   const [newMessage, setNewMessage] = useState('');
   const classes = useStyles();
   const messageRef = useRef();

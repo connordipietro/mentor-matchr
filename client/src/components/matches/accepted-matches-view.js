@@ -1,4 +1,3 @@
-import { Container, Grid } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { getAcceptedConnections } from '../../utilities/api';

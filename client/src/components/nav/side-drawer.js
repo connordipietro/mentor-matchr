@@ -21,6 +21,7 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import { AccountCircle } from '@material-ui/icons';
+/* import useBadges from '../../utilities/useChatRoom'; */
 
 const useStyles = makeStyles({
   list: {
@@ -32,6 +33,8 @@ const useStyles = makeStyles({
 });
 
 export default function TemporaryDrawer({ auth }) {
+  /* const { globalBadge, setGlobalBadge } = useBadges(); */
+
   const history = useHistory();
   const classes = useStyles();
   const [state, setState] = useState({
@@ -106,7 +109,7 @@ export default function TemporaryDrawer({ auth }) {
         aria-label="menu"
         onClick={toggleDrawer('left', true)}
       >
-        <Badge badgeContent={4} color="secondary">
+        <Badge badgeContent={0} color="secondary">
           <MenuIcon />
         </Badge>
       </IconButton>

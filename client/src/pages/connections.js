@@ -12,7 +12,7 @@ export const ConnectionsPage = () => {
       {!isAccountSetup || !isAuth ? null : (
         <>
           <Container
-            maxWidth="xl"
+            maxWidth="md"
             style={{
               marginTop: '5vh',
               justifyContent: 'center',

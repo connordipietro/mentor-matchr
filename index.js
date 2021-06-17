@@ -115,9 +115,9 @@ const STATIC_CHANNELS = [
 
 const NEW_MESSAGE_EVENT = 'new-message-event';
 
-// Todo. Make room be the db id of the connection
 // save msg to db on socket event
 // Create route to send old messages to front end
+const Connections = require('./database/models/connections');
 
 io.on('connection', async (socket) => {
   let room;
@@ -125,11 +125,14 @@ io.on('connection', async (socket) => {
   await socket.on('matchId', async function (matchId) {
     room = matchId;
     socket.join(room);
-    console.log(socket);
   });
 
-  socket.on(NEW_MESSAGE_EVENT, (data) => {
-    console.log(data);
+  socket.on(NEW_MESSAGE_EVENT, async (data) => {
+    await Connections.findOneAndUpdate(
+      { _id: room },
+      { $push: { chatLog: data } },
+      { new: true }
+    );
 
     io.in(room).emit(NEW_MESSAGE_EVENT, data);
   });
@@ -140,11 +143,6 @@ io.on('connection', async (socket) => {
 });
 
 // Pull into own routes files
-app.get('/getChannels', (req, res) => {
-  res.json({
-    channels: STATIC_CHANNELS,
-  });
-});
 /* 
 
 app.get('/', (req, res) => {

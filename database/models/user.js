@@ -71,6 +71,11 @@ const UserSchema = new Schema({
     defualt: null,
     required: false,
   },
+  lastLogIn: {
+    type: Array,
+    default: null,
+    required: false,
+  },
 });
 
 module.exports = mongoose.model('Customer', CustomerSchema);
