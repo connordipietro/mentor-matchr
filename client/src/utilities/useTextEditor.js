@@ -5,28 +5,19 @@ import { config } from '../config/constants';
 
 // Same as server side socket var
 const NEW_TEXT_EDITOR_EVENT = 'new-text-editor-event';
+const NEW_TEXT_EDITOR_THEME = 'new-text-editor-theme';
+const NEW_TEXT_EDITOR_LANGUAGE = 'new-text-editor-language';
 const SOCKET_SERVER_URL = config.url.PORT;
 
 const useTextEditor = (matchId, senderEmail) => {
   const [editorText, setEditorText] = useState([]);
+  const [editorTheme, setEditorTheme] = useState('github');
+  const [editorLanguage, setEditorLanguage] = useState('javascript');
   const socketRef = useRef();
   useEffect(() => {
     // create a new client with our server url
     socketRef.current = socketIOClient(SOCKET_SERVER_URL);
 
-    /* // Get chatLog from DB
-    getChatLog({ matchId }).then((res) => {
-      const { chatLog } = res.data;
-
-      const chatLogWithIsOwner = chatLog.map((msg) => ({
-        ...msg,
-        isOwner: msg.senderEmail === senderEmail,
-      }));
-
-      setMessages(chatLogWithIsOwner);
-    }); */
-
-    // Send the matchId to server so a unique room can be created for matched users
     const socketInfo = {
       matchId,
       type: 'workSpace',
@@ -39,8 +30,19 @@ const useTextEditor = (matchId, senderEmail) => {
         ...text,
         isOwner: text.senderEmail === senderEmail,
       };
-      // send the new message to the others in the same room.
+      // send the new text body to the others in the same room.
       setEditorText(incomingText);
+    });
+
+    // Broadcast theme change to room
+    socketRef.current.on(NEW_TEXT_EDITOR_THEME, (themeData) => {
+      // send the new message to the others in the same room.
+      setEditorTheme(themeData.theme);
+    });
+
+    socketRef.current.on(NEW_TEXT_EDITOR_LANGUAGE, (languageData) => {
+      // send the new message to the others in the same room.
+      setEditorLanguage(languageData.language);
     });
 
     return () => {
@@ -60,7 +62,22 @@ const useTextEditor = (matchId, senderEmail) => {
     });
   };
 
-  return { editorText, sendText };
+  const sendTheme = (theme) => {
+    socketRef.current.emit(NEW_TEXT_EDITOR_THEME, { theme });
+  };
+
+  const sendLanguage = (language) => {
+    socketRef.current.emit(NEW_TEXT_EDITOR_LANGUAGE, { language });
+  };
+
+  return {
+    editorText,
+    sendText,
+    editorTheme,
+    sendTheme,
+    editorLanguage,
+    sendLanguage,
+  };
 };
 
 export default useTextEditor;

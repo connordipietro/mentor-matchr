@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import AceEditor from 'react-ace';
+import 'ace-builds/webpack-resolver';
 // Themes
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/theme-github';
@@ -74,18 +74,23 @@ const defaultLanguages = [
 export default function TextEditor({ userData }) {
   const { matchId, senderEmail } = userData;
 
-  const [theme, setTheme] = useState(defaultThemes[0]);
-  const [language, setLanguage] = useState(defaultLanguages[0]);
-  const { editorText, sendText } = useTextEditor(matchId, senderEmail);
+  const {
+    editorText,
+    sendText,
+    editorTheme,
+    sendTheme,
+    editorLanguage,
+    sendLanguage,
+  } = useTextEditor(matchId, senderEmail);
 
   const classes = useStyles();
 
   const handleThemeChange = (evt) => {
-    // setTheme(evt.target.value);
+    sendTheme(evt.target.value);
   };
 
   const handleLanguageChange = (evt) => {
-    // setLanguage(evt.target.value);
+    sendLanguage(evt.target.value);
   };
 
   async function onChange(newValue) {
@@ -99,7 +104,7 @@ export default function TextEditor({ userData }) {
         <Select
           labelId="select-helper-label"
           id="select-helper"
-          value={theme}
+          value={editorTheme}
           onChange={handleThemeChange}
         >
           {defaultThemes.map((themeName) => (
@@ -114,7 +119,7 @@ export default function TextEditor({ userData }) {
         <Select
           labelId="select-helper-label"
           id="select-helper"
-          value={language}
+          value={editorLanguage}
           onChange={handleLanguageChange}
         >
           {defaultLanguages.map((languageName) => (
@@ -125,8 +130,8 @@ export default function TextEditor({ userData }) {
         </Select>
       </FormControl>
       <AceEditor
-        mode={language}
-        theme={theme}
+        mode={editorLanguage}
+        theme={editorTheme}
         onChange={onChange}
         name="UNIQUE_ID_OF_DIV"
         value={editorText.body}

@@ -101,6 +101,8 @@ server.listen(PORT, () => {
 // Socket events, same as client side
 const NEW_MESSAGE_EVENT = 'new-message-event';
 const NEW_TEXT_EDITOR_EVENT = 'new-text-editor-event';
+const NEW_TEXT_EDITOR_THEME = 'new-text-editor-theme';
+const NEW_TEXT_EDITOR_LANGUAGE = 'new-text-editor-language';
 
 // For creating unique socket room based on matchId
 const Connections = require('./database/models/connections');
@@ -121,7 +123,7 @@ io.on('connection', async (socket) => {
       socket.join(workSpace);
     }
   });
-
+  // Chat room message event
   socket.on(NEW_MESSAGE_EVENT, async (data) => {
     await Connections.findOneAndUpdate(
       { _id: matchId },
@@ -132,8 +134,18 @@ io.on('connection', async (socket) => {
     io.in(chatRoom).emit(NEW_MESSAGE_EVENT, data);
   });
 
+  // Text editor change event
   socket.on(NEW_TEXT_EDITOR_EVENT, async (data) => {
     io.in(workSpace).emit(NEW_TEXT_EDITOR_EVENT, data);
+  });
+
+  // Text editor theme change event
+  socket.on(NEW_TEXT_EDITOR_THEME, async (data) => {
+    io.in(workSpace).emit(NEW_TEXT_EDITOR_THEME, data);
+  });
+
+  socket.on(NEW_TEXT_EDITOR_LANGUAGE, async (data) => {
+    io.in(workSpace).emit(NEW_TEXT_EDITOR_LANGUAGE, data);
   });
 
   socket.on('disconnect', () => {
