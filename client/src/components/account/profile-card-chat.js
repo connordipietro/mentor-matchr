@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import clsx from 'clsx';
 import { PropTypes } from 'prop-types';
 import { useHistory } from 'react-router';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   CardContent,

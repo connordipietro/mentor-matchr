@@ -20,6 +20,7 @@ export default function ChipsHandler({ setChips }) {
 
   const [userChips, setUserChips] = useState([]);
 
+  // Potential to connect to admin dashboard?
   const [defaultChips, setDefaultChips] = useState([
     { key: 0, label: 'Angular' },
     { key: 1, label: 'jQuery' },

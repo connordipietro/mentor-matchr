@@ -24,7 +24,6 @@ export default function CreateAccountForm({ edit }) {
   const [avatar, setAvatar] = useState([]);
   const [chips, setChips] = useState([]);
   const [bio, setBio] = useState('');
-
   const [error, setError] = useState(null);
 
   const history = useHistory();

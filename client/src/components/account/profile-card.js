@@ -28,10 +28,6 @@ const useStyles = makeStyles((theme) => ({
       secondary: 'orange',
     },
   },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
   rightIcon: {
     marginLeft: 'auto',
   },
