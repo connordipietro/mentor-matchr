@@ -24,6 +24,8 @@ import 'ace-builds/src-noconflict/mode-golang';
 import 'ace-builds/src-noconflict/mode-csharp';
 import 'ace-builds/src-noconflict/mode-coffee';
 import 'ace-builds/src-noconflict/mode-css';
+// Import options
+import 'ace-builds/src-noconflict/ext-language_tools';
 import {
   FormControl,
   InputLabel,
@@ -131,11 +133,20 @@ export default function TextEditor({ userData }) {
       </FormControl>
       <AceEditor
         mode={editorLanguage}
+        highlightActiveLine
         theme={editorTheme}
         onChange={onChange}
         name="UNIQUE_ID_OF_DIV"
         value={editorText.body}
         editorProps={{ $blockScrolling: true }}
+        enableLiveAutocompletion
+        fontSize={14}
+        setOptions={{
+          enableLiveAutocompletion: true,
+          enableSnippets: false,
+          showLineNumbers: true,
+          tabSize: 2,
+        }}
       />
     </>
   );

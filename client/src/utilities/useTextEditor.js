@@ -11,7 +11,7 @@ const SOCKET_SERVER_URL = config.url.PORT;
 
 const useTextEditor = (matchId, senderEmail) => {
   const [editorText, setEditorText] = useState([]);
-  const [editorTheme, setEditorTheme] = useState('github');
+  const [editorTheme, setEditorTheme] = useState('monokai');
   const [editorLanguage, setEditorLanguage] = useState('javascript');
   const socketRef = useRef();
   useEffect(() => {
