@@ -27,10 +27,12 @@ import 'ace-builds/src-noconflict/mode-css';
 // Import options
 import 'ace-builds/src-noconflict/ext-language_tools';
 import {
+  Container,
   FormControl,
   InputLabel,
   makeStyles,
   MenuItem,
+  Paper,
   Select,
 } from '@material-ui/core';
 import useTextEditor from '../../utilities/useTextEditor';
@@ -101,53 +103,60 @@ export default function TextEditor({ userData }) {
 
   return (
     <>
-      <FormControl className={classes.formControl}>
-        <InputLabel id="select-helper-label">Theme</InputLabel>
-        <Select
-          labelId="select-helper-label"
-          id="select-helper"
-          value={editorTheme}
-          onChange={handleThemeChange}
-        >
-          {defaultThemes.map((themeName) => (
-            <MenuItem key={themeName} value={themeName}>
-              {themeName}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl className={classes.formControl}>
-        <InputLabel id="select-helper-label">Lanuage</InputLabel>
-        <Select
-          labelId="select-helper-label"
-          id="select-helper"
-          value={editorLanguage}
-          onChange={handleLanguageChange}
-        >
-          {defaultLanguages.map((languageName) => (
-            <MenuItem key={languageName} value={languageName}>
-              {languageName}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <AceEditor
-        mode={editorLanguage}
-        highlightActiveLine
-        theme={editorTheme}
-        onChange={onChange}
-        name="UNIQUE_ID_OF_DIV"
-        value={editorText.body}
-        editorProps={{ $blockScrolling: true }}
-        enableLiveAutocompletion
-        fontSize={14}
-        setOptions={{
-          enableLiveAutocompletion: true,
-          enableSnippets: false,
-          showLineNumbers: true,
-          tabSize: 2,
-        }}
-      />
+      <Container>
+        <FormControl className={classes.formControl}>
+          <InputLabel id="select-helper-label">Theme</InputLabel>
+          <Select
+            labelId="select-helper-label"
+            id="select-helper"
+            value={editorTheme}
+            onChange={handleThemeChange}
+          >
+            {defaultThemes.map((themeName) => (
+              <MenuItem key={themeName} value={themeName}>
+                {themeName}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <InputLabel id="select-helper-label">Lanuage</InputLabel>
+          <Select
+            labelId="select-helper-label"
+            id="select-helper"
+            value={editorLanguage}
+            onChange={handleLanguageChange}
+          >
+            {defaultLanguages.map((languageName) => (
+              <MenuItem key={languageName} value={languageName}>
+                {languageName}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Container>
+
+      <Container>
+        <AceEditor
+          mode={editorLanguage}
+          highlightActiveLine
+          theme={editorTheme}
+          onChange={onChange}
+          name="UNIQUE_ID_OF_DIV"
+          value={editorText.body}
+          editorProps={{ $blockScrolling: true }}
+          enableLiveAutocompletion
+          fontSize={14}
+          width="100%"
+          setOptions={{
+            enableLiveAutocompletion: true,
+            enableSnippets: false,
+            showLineNumbers: true,
+            tabSize: 2,
+            showPrintMargin: false,
+          }}
+        />
+      </Container>
     </>
   );
 }
