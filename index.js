@@ -98,47 +98,51 @@ server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
 
-const STATIC_CHANNELS = [
-  {
-    name: 'Global chat',
-    participants: 0,
-    id: 1,
-    sockets: [],
-  },
-  {
-    name: 'Funny',
-    participants: 0,
-    id: 2,
-    sockets: [],
-  },
-];
-
+// Socket events, same as client side
 const NEW_MESSAGE_EVENT = 'new-message-event';
+const NEW_TEXT_EDITOR_EVENT = 'new-text-editor-event';
 
-// save msg to db on socket event
-// Create route to send old messages to front end
+// For creating unique socket room based on matchId
 const Connections = require('./database/models/connections');
 
 io.on('connection', async (socket) => {
-  let room;
+  let chatRoom;
+  let workSpace;
+  let matchId;
   // Creates a socket room with the match id of the current matched users
-  await socket.on('matchId', async function (matchId) {
-    room = matchId;
-    socket.join(room);
+  await socket.on('matchId', async function (socketInfo) {
+    matchId = socketInfo.matchId;
+    if (socketInfo.type === 'chatRoom') {
+      chatRoom = `${socketInfo.matchId}chatRoom`;
+      socket.join(chatRoom);
+    }
+    if (socketInfo.type === 'workSpace') {
+      workSpace = `${socketInfo.matchId}workSpace`;
+      socket.join(workSpace);
+    }
   });
 
   socket.on(NEW_MESSAGE_EVENT, async (data) => {
     await Connections.findOneAndUpdate(
-      { _id: room },
+      { _id: matchId },
       { $push: { chatLog: data } },
       { new: true }
     );
 
-    io.in(room).emit(NEW_MESSAGE_EVENT, data);
+    io.in(chatRoom).emit(NEW_MESSAGE_EVENT, data);
+  });
+
+  socket.on(NEW_TEXT_EDITOR_EVENT, async (data) => {
+    io.in(workSpace).emit(NEW_TEXT_EDITOR_EVENT, data);
   });
 
   socket.on('disconnect', () => {
-    socket.leave(room);
+    if (chatRoom) {
+      socket.leave(chatRoom);
+    }
+    if (workSpace) {
+      socket.leave(workSpace);
+    }
   });
 });
 
