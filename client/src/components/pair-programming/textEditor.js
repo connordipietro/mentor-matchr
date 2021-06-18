@@ -44,6 +44,7 @@ import ReactHtmlParser from 'react-html-parser';
 import * as Babel from '@babel/standalone';
 import { useState } from 'react';
 import useTextEditor from '../../utilities/useTextEditor';
+import { challengeObj } from './js-challenges';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -93,6 +94,8 @@ export default function TextEditor({ userData }) {
     sendTheme,
     editorLanguage,
     sendLanguage,
+    editorChallenge,
+    sendChallenge,
   } = useTextEditor(matchId, senderEmail);
 
   const [error, setError] = useState('');
@@ -111,6 +114,10 @@ export default function TextEditor({ userData }) {
     sendText(newValue);
   }
 
+  const handleChallengeChange = (evt) => {
+    sendChallenge(evt.target.value);
+  };
+
   const transformCode = (code) => {
     try {
       return Babel.transform(code, {
@@ -124,7 +131,6 @@ export default function TextEditor({ userData }) {
       return code;
     }
   };
-
   const handleCompile = () => {
     transformCode(editorText.body);
   };
@@ -162,8 +168,24 @@ export default function TextEditor({ userData }) {
             ))}
           </Select>
         </FormControl>
+        {editorLanguage === 'javascript' ? (
+          <FormControl className={classes.formControl}>
+            <InputLabel id="select-helper-label">Code Challenge</InputLabel>
+            <Select
+              labelId="select-helper-label"
+              id="select-helper"
+              value={editorChallenge}
+              onChange={handleChallengeChange}
+            >
+              {challengeObj.names.map((challengeName) => (
+                <MenuItem key={challengeName} value={challengeName}>
+                  {challengeName}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        ) : null}
       </Container>
-
       <Container>
         <AceEditor
           mode={editorLanguage}
@@ -187,14 +209,14 @@ export default function TextEditor({ userData }) {
       </Container>
       <br />
       {editorLanguage === 'javascript' ? (
-        <Container maxWdith="md">
+        <Container maxWidth="md">
           <Button variant="outlined" onClick={() => handleCompile()}>
             Eval JS
           </Button>
           <br />
           <Typography variant="h6">JS Error Console:</Typography>
           <br />
-          <div>{error}</div>
+          <div>{!error ? 'No error found' : error}</div>
         </Container>
       ) : null}
     </>

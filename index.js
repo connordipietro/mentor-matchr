@@ -103,6 +103,7 @@ const NEW_MESSAGE_EVENT = 'new-message-event';
 const NEW_TEXT_EDITOR_EVENT = 'new-text-editor-event';
 const NEW_TEXT_EDITOR_THEME = 'new-text-editor-theme';
 const NEW_TEXT_EDITOR_LANGUAGE = 'new-text-editor-language';
+const NEW_TEXT_EDITOR_CHALLENGE = 'new-text-editor-challenge';
 
 // For creating unique socket room based on matchId
 const Connections = require('./database/models/connections');
@@ -144,8 +145,15 @@ io.on('connection', async (socket) => {
     io.in(workSpace).emit(NEW_TEXT_EDITOR_THEME, data);
   });
 
+  // Text editor language change
   socket.on(NEW_TEXT_EDITOR_LANGUAGE, async (data) => {
     io.in(workSpace).emit(NEW_TEXT_EDITOR_LANGUAGE, data);
+  });
+
+  // Text editor challenge change
+  socket.on(NEW_TEXT_EDITOR_CHALLENGE, async (data) => {
+    console.log(data);
+    io.in(workSpace).emit(NEW_TEXT_EDITOR_CHALLENGE, data);
   });
 
   socket.on('disconnect', () => {

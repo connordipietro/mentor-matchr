@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import socketIOClient from 'socket.io-client';
+import { challengeObj } from '../components/pair-programming/js-challenges';
 import { config } from '../config/constants';
 // import { getChatLog } from './api';
 
@@ -7,12 +8,16 @@ import { config } from '../config/constants';
 const NEW_TEXT_EDITOR_EVENT = 'new-text-editor-event';
 const NEW_TEXT_EDITOR_THEME = 'new-text-editor-theme';
 const NEW_TEXT_EDITOR_LANGUAGE = 'new-text-editor-language';
+const NEW_TEXT_EDITOR_CHALLENGE = 'new-text-editor-challenge';
 const SOCKET_SERVER_URL = config.url.PORT;
 
 const useTextEditor = (matchId, senderEmail) => {
-  const [editorText, setEditorText] = useState([]);
+  const [editorText, setEditorText] = useState({
+    body: challengeObj.content[1],
+  });
   const [editorTheme, setEditorTheme] = useState('monokai');
   const [editorLanguage, setEditorLanguage] = useState('javascript');
+  const [editorChallenge, setEditorChallenge] = useState('BitCounting');
   const socketRef = useRef();
   useEffect(() => {
     // create a new client with our server url
@@ -45,6 +50,17 @@ const useTextEditor = (matchId, senderEmail) => {
       setEditorLanguage(languageData.language);
     });
 
+    // Broadcast challenge change to room
+    socketRef.current.on(NEW_TEXT_EDITOR_CHALLENGE, (challengeData) => {
+      const challengeInfo = challengeObj.names.indexOf(challengeData.challenge);
+      const data = challengeObj.content[challengeInfo];
+      const challengeText = {
+        body: data,
+      };
+      setEditorText(challengeText);
+      setEditorChallenge(challengeData.challenge);
+    });
+
     return () => {
       socketRef.current.disconnect();
     };
@@ -70,6 +86,10 @@ const useTextEditor = (matchId, senderEmail) => {
     socketRef.current.emit(NEW_TEXT_EDITOR_LANGUAGE, { language });
   };
 
+  const sendChallenge = (challenge) => {
+    socketRef.current.emit(NEW_TEXT_EDITOR_CHALLENGE, { challenge });
+  };
+
   return {
     editorText,
     sendText,
@@ -77,6 +97,8 @@ const useTextEditor = (matchId, senderEmail) => {
     sendTheme,
     editorLanguage,
     sendLanguage,
+    editorChallenge,
+    sendChallenge,
   };
 };
 

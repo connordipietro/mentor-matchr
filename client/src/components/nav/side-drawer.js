@@ -18,9 +18,8 @@ import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
 import MenuIcon from '@material-ui/icons/Menu';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
-import { AccountCircle } from '@material-ui/icons';
+import { AccountCircle, EmailOutlined } from '@material-ui/icons';
 /* import useBadges from '../../utilities/useChatRoom'; */
 
 const useStyles = makeStyles({
@@ -86,16 +85,31 @@ export default function TemporaryDrawer({ auth }) {
 
       <Divider />
       <List>
-        {[
-          { text: 'About', icon: <InfoIcon /> },
-          { text: 'Contact', icon: <MailOutlineIcon /> },
-          { text: 'Donate', icon: <MonetizationOnIcon /> },
-        ].map((item) => (
-          <ListItem button key={item.text}>
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} />
-          </ListItem>
-        ))}
+        <ListItem
+          button
+          key="about"
+          onClick={() =>
+            (window.location.href =
+              'https://github.com/connordipietro/mentor-matchr')
+          }
+        >
+          <ListItemIcon>
+            <InfoIcon />
+          </ListItemIcon>
+          <ListItemText primary="About" />
+        </ListItem>
+        <ListItem
+          button
+          key="contact"
+          onClick={() =>
+            (window.location.href = 'mailto:connor.dipietro@gmail.com')
+          }
+        >
+          <ListItemIcon>
+            <EmailOutlined />
+          </ListItemIcon>
+          <ListItemText primary="Email Me" />
+        </ListItem>
       </List>
     </div>
   );
