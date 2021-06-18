@@ -1,3 +1,7 @@
+/* eslint-disable no-new */
+/* eslint-disable new-cap */
+/* eslint-disable no-new-func */
+/* eslint-disable no-eval */
 import { PropTypes } from 'prop-types';
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
@@ -27,14 +31,18 @@ import 'ace-builds/src-noconflict/mode-css';
 // Import options
 import 'ace-builds/src-noconflict/ext-language_tools';
 import {
+  Button,
   Container,
   FormControl,
   InputLabel,
   makeStyles,
   MenuItem,
-  Paper,
   Select,
+  Typography,
 } from '@material-ui/core';
+import ReactHtmlParser from 'react-html-parser';
+import * as Babel from '@babel/standalone';
+import { useState } from 'react';
 import useTextEditor from '../../utilities/useTextEditor';
 
 const useStyles = makeStyles((theme) => ({
@@ -87,6 +95,8 @@ export default function TextEditor({ userData }) {
     sendLanguage,
   } = useTextEditor(matchId, senderEmail);
 
+  const [error, setError] = useState('');
+
   const classes = useStyles();
 
   const handleThemeChange = (evt) => {
@@ -100,6 +110,24 @@ export default function TextEditor({ userData }) {
   async function onChange(newValue) {
     sendText(newValue);
   }
+
+  const transformCode = (code) => {
+    try {
+      return Babel.transform(code, {
+        presets: ['env'],
+      }).code;
+    } catch (e) {
+      const htmlstring = e.toString().replace(/(\r\n|\n|\r)/gm, ' <br /> ');
+      const parsedHtml = <div> {ReactHtmlParser(htmlstring)} </div>;
+      setError(parsedHtml);
+      // todo: handle error
+      return code;
+    }
+  };
+
+  const handleCompile = () => {
+    transformCode(editorText.body);
+  };
 
   return (
     <>
@@ -157,6 +185,18 @@ export default function TextEditor({ userData }) {
           }}
         />
       </Container>
+      <br />
+      {editorLanguage === 'javascript' ? (
+        <Container maxWdith="md">
+          <Button variant="outlined" onClick={() => handleCompile()}>
+            Eval JS
+          </Button>
+          <br />
+          <Typography variant="h6">JS Error Console:</Typography>
+          <br />
+          <div>{error}</div>
+        </Container>
+      ) : null}
     </>
   );
 }

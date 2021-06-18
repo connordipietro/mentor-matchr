@@ -6,6 +6,7 @@ const adminRoutes = require('./admin/admin');
 const userRoutes = require('./user/user');
 const devRoutes = require('./admin/dev/dev-routes');
 const connectionRoutes = require('./user/connections');
+const compileRoutes = require('./compiling/compile');
 
 router.use('/auth', authRoutes);
 router.use('/payment', paymentRoutes);
@@ -14,5 +15,6 @@ router.use('/admin', adminRoutes);
 router.use('/user', userRoutes);
 router.use('/user/connections/', connectionRoutes);
 router.use('/dev', devRoutes);
+router.use('/compile', compileRoutes);
 
 module.exports = router;

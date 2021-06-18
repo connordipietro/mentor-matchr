@@ -49,6 +49,26 @@ export const getAcceptedConnections = async (data) =>
 export const getChatLog = async (data) =>
   axios.post(config.url.API_GET_CHAT_LOG, data, credentials);
 
+export const postCompile = async (data) =>
+  axios.post(config.url.API_COMPILE, data, credentials);
+
+// Sends JS to google closure api for processing
+const headers = { 'Content-type': 'application/x-www-form-urlencoded' };
+export const postCloserApi = async (data) => {
+  const request = {
+    js_code: data,
+    compilation_level: 'SIMPLE_OPTIMIZATIONS',
+    output_format: 'json',
+    formatting: 'pretty_print',
+    output_info: 'warnings',
+  };
+  return axios.post(
+    `http://closure-compiler.appspot.com/compile`,
+    request,
+    headers
+  );
+};
+
 // Auth status check for redux store
 export const GET_AUTH_STATUS = 'GET_AUTH_STATUS';
 
