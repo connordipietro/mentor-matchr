@@ -1,11 +1,16 @@
 import { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Button, Typography } from '@material-ui/core';
 import { setPaymentMethod } from '../utilities/api';
 import './style/stripe-form.css';
 import '../pages/pages.css';
+import { LoadingSpinner } from './style/loading-spinner';
+import { ProductsPage } from '../pages';
 
 export const StripeForm = () => {
   const [error, setError] = useState();
+  const [success, setSuccess] = useState();
+  const [loading, setLoading] = useState();
 
   const stripe = useStripe();
   const elements = useElements();
@@ -22,23 +27,26 @@ export const StripeForm = () => {
     if (!stripe || !elements) {
       return;
     }
-
-    const payload = await stripe
+    setLoading(true);
+    await stripe
       .createPaymentMethod({
         type: 'card',
         card: elements.getElement(CardElement),
       })
       .then(function (result) {
         if (result.error) {
-          setError(event.error.message);
+          setError(result.error.message);
+          setLoading(false);
         } else {
           setError(null);
+          setSuccess(true);
+          setLoading(false);
           // Send paymentMethod.id to server
           setPaymentMethod({ id: result.paymentMethod.id });
         }
       })
       .then(function (result) {
-        // Handle server response
+        setLoading(false);
       });
   };
 
@@ -48,7 +56,6 @@ export const StripeForm = () => {
     } else {
       setError(null);
     }
-    console.log(event);
   };
 
   return (
@@ -56,8 +63,21 @@ export const StripeForm = () => {
       {error ? <div>{error}</div> : null}
       <form onSubmit={handleSubmit}>
         <CardElement onChange={handleChange} />
-        <button type="submit"> Pay </button>
+        <br />
+        <br />
+        <Button type="submit" variant="outlined">
+          Add Card
+        </Button>
       </form>
+      {success ? (
+        <>
+          <Typography variant="h6">
+            You succesfully added a payment method.
+          </Typography>
+          <ProductsPage />
+        </>
+      ) : null}
+      {loading ? <LoadingSpinner loading={loading} /> : null}
     </div>
   );
 };

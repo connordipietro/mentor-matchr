@@ -47,9 +47,14 @@ export default function ProfileCardChat({
   const history = useHistory();
 
   const handleCollabClick = () => {
-    console.log('click');
     history.push({
       pathname: `/pair-programming/${matchId}`,
+      state: { senderEmail, recipientEmail, matchId },
+    });
+  };
+  const handleTipClick = () => {
+    history.push({
+      pathname: `/payment/`,
       state: { senderEmail, recipientEmail, matchId },
     });
   };
@@ -64,6 +69,14 @@ export default function ProfileCardChat({
           onClick={(e) => handleCollabClick(e)}
         >
           Pair Program
+        </Button>
+        <Button
+          size="small"
+          variant="contained"
+          className={classes.buttonLeft}
+          onClick={(e) => handleTipClick(e)}
+        >
+          Tip with Stripe
         </Button>
         <IconButton
           className={clsx(classes.expand, {

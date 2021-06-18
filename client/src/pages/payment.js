@@ -1,4 +1,4 @@
-import { Container } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getLoginStatus } from '../utilities/api';
@@ -21,7 +21,9 @@ export const PaymentPage = () => {
 
   return !loading ? (
     <Container maxWidth="sm">
-      <h3>Payment Page</h3>
+      <Typography variant="h6">Add a new payment method</Typography>
+      <br />
+      <br />
       <StripeForm />
     </Container>
   ) : (

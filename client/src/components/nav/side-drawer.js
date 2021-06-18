@@ -17,7 +17,6 @@ import DoneAllIcon from '@material-ui/icons/DoneAll';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
 import MenuIcon from '@material-ui/icons/Menu';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import { AccountCircle, EmailOutlined } from '@material-ui/icons';
 /* import useBadges from '../../utilities/useChatRoom'; */
