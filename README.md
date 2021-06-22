@@ -2,9 +2,13 @@
 
 This tool is designed to encourage software mentorship.
 
+## Key Features
+
+Collaborative, live text editor for pair programming with a sandboxed JavaScript console and various code challenges. An encrypted live chat with logs using socket.io. Payment acceptance with Stripe. An admin dashboard with TTL site-wide custom banner setting.
+
 ## Concepts Introduced
 
-Stripe, Sockets.IO, Material-UI, Image Upload, Drag and Drop, Admin Dashboard
+Stripe, Socket.IO, Material-UI, Admin Dashboard
 
 ## Tech
 This is a continuously deployed MERN app (Heroku, MongoDB Cloud Atlas).
