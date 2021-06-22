@@ -4,7 +4,7 @@ This tool is designed to encourage software mentorship.
 
 ## Key Features
 
-Collaborative, live text editor for pair programming with a sandboxed JavaScript console and various code challenges. An encrypted live chat with logs using socket.io. Payment acceptance with Stripe. An admin dashboard with TTL site-wide custom banner setting.
+Collaborative, live text editor (ace) for pair programming with a sandboxed JavaScript console (node vm) and various code challenges. Live  instant chat with logs using socket.io. Payment acceptance with Stripe. An admin dashboard with TTL site-wide custom banner setting.
 
 ## Concepts Introduced
 
